@@ -1,123 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>CampusMate – Login & Register</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>CampusMate – Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #e0eaff, #f0f4ff);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    h1 {
-      font-size: 28px;
-      color: #2d87f0;
-      margin-bottom: 5px;
-    }
-
-    p {
-      color: #333;
-      margin-bottom: 30px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
+      font-family: Arial, sans-serif;
+      background: #eef2ff;
       padding: 30px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      margin-bottom: 30px;
-      transition: 0.3s ease;
+      text-align: center;
     }
 
-    .card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-size: 22px;
-      color: #2d87f0;
+    .form-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 10px auto;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: none;
     }
 
     input, select {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
     }
 
     button {
-      width: 100%;
+      padding: 10px 20px;
+      margin-top: 15px;
+      border: none;
       background: #2d87f0;
       color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
     }
 
     button:hover {
-      background: #1a6dd6;
-    }
-
-    .note {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-top: -15px;
-      margin-bottom: 10px;
+      background: #155fd4;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎓 CampusMate</h1>
+  <h1>🎓 Welcome to CampusMate</h1>
   <p>Your School Companion for UNIOSUN Students</p>
 
-  <!-- Register Form -->
-  <div class="card">
+  <!-- Toggle Buttons -->
+  <button onclick="toggleForm('register')">📝 Create Account</button>
+  <button onclick="toggleForm('login')">🔐 Login</button>
+
+  <!-- Register -->
+  <div class="form-container" id="registerBox">
     <h2>Create Account</h2>
     <form id="registerForm">
-      <input type="text" id="regName" placeholder="Full Name" required />
-      <input type="tel" id="regPhone" placeholder="Phone Number" required />
+      <input type="text" id="regName" placeholder="Full Name" required>
+      <input type="tel" id="regPhone" placeholder="Phone Number" required>
       <select id="regFaculty" required>
         <option value="">Select Faculty</option>
         <option>College of Health Sciences</option>
         <option>College of Science, Engineering and Technology</option>
         <option>Faculty of Computing and Information Technology</option>
       </select>
-      <input type="email" id="regEmail" placeholder="Email Address" required />
-      <input type="password" id="regPassword" placeholder="Password" required />
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
       <button type="submit">Register</button>
-      <div class="note">Already have an account? Scroll down to login</div>
     </form>
   </div>
 
-  <!-- Login Form -->
-  <div class="card">
+  <!-- Login -->
+  <div class="form-container" id="loginBox">
     <h2>Login</h2>
     <form id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email Address" required />
-      <input type="password" id="loginPassword" placeholder="Password" required />
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
       <button type="submit">Login</button>
     </form>
   </div>
 
-  <!-- Supabase -->
+  <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.1/+esm" type="module"></script>
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.1/+esm";
@@ -127,9 +92,10 @@
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqd2hkaXZtZWZkenpscHJ1YXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4Nzk0MzMsImV4cCI6MjA2NjQ1NTQzM30.T4SwzkP1HTOEzN8zRtH_fMIbiiqJcOLFVeM_ndgTn08"
     );
 
-    // Register
+    // REGISTER
     document.getElementById("registerForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const name = document.getElementById("regName").value;
       const phone = document.getElementById("regPhone").value;
       const faculty = document.getElementById("regFaculty").value;
@@ -140,21 +106,27 @@
         email,
         password,
         options: {
-          data: { name, phone, faculty }
+          data: {
+            name,
+            phone,
+            faculty
+          }
         }
       });
 
       if (error) {
         alert("❌ Registration failed: " + error.message);
       } else {
-        alert("✅ Account created! Please login.");
+        alert("✅ Account created! You can now log in.");
         document.getElementById("registerForm").reset();
+        toggleForm('login');
       }
     });
 
-    // Login
+    // LOGIN
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
 
@@ -167,6 +139,12 @@
         window.location.href = "home.html";
       }
     });
+
+    // Toggle Function
+    window.toggleForm = function (formType) {
+      document.getElementById("registerBox").style.display = formType === "register" ? "block" : "none";
+      document.getElementById("loginBox").style.display = formType === "login" ? "block" : "none";
+    };
   </script>
 </body>
 </html>
