@@ -61,7 +61,7 @@
 <div class="course" onclick="toggle('mth102')">
   <h2>MTH 102 – Mathematics</h2>
   <div id="mth102" class="topics">
-    <a href="https://docs.google.com/presentation/d/16dsguaE1YIGC74YtC8IuL7jjNAq28YWF/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>🧮 differentiatuon</a>
+    <a href="https://docs.google.com/presentation/d/16dsguaE1YIGC74YtC8IuL7jjNAq28YWF/edit?usp=drivesdk" download>🧮 Differentiation</a>
   </div>
 </div>
 
@@ -69,8 +69,8 @@
 <div class="course" onclick="toggle('phy102')">
   <h2>PHY 102 – Physics</h2>
   <div id="phy102" class="topics">
-    <a href="https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>⚡ Transformers</a>
-   <a href= "https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" downaload transformers 2</a>
+    <a href="https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk" download>⚡ Transformers</a>
+    <a href="https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk" download>⚡ Transformers 2</a>
   </div>
 </div>
 
@@ -94,7 +94,7 @@
 <div class="course" onclick="toggle('chm102')">
   <h2>CHM 102 – Chemistry</h2>
   <div id="chm102" class="topics">
-    <a href="https://docs.google.com/presentation/d/1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true"download Chemistry Slides 102</a>
+    <a href="https://docs.google.com/presentation/d/1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7/edit?usp=drivesdk" download>🧪 Chemistry Slides 102</a>
   </div>
 </div>
 
@@ -102,10 +102,11 @@
 <div class="course" onclick="toggle('bio102')">
   <h2>BIO 102 – Biology</h2>
   <div id="bio102" class="topics">
-    <a href="https://docs.google.com/document/d/16xtYCZvg-LcX608dpKZNbhO4_LDLZyUw/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>🧬 Cell structure</a>
-     <a href="https://docs.google.com/presentation/d/1T3LusZfroYmNetOMq1tgYuS2A5hKzZxE/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>BIO 102</a>
+    <a href="https://docs.google.com/document/d/16xtYCZvg-LcX608dpKZNbhO4_LDLZyUw/edit?usp=drivesdk" download>🧬 Cell Structure</a>
+    <a href="https://docs.google.com/presentation/d/1T3LusZfroYmNetOMq1tgYuS2A5hKzZxE/edit?usp=drivesdk" download>🌿 BIO 102 Slides</a>
   </div>
 </div> 
+
 <!-- COS 104 -->
 <div class="course" onclick="toggle('cos104')">
   <h2>COS 104 – Computer Science</h2>
@@ -116,10 +117,10 @@
 
 <!-- ESI 102 -->
 <div class="course" onclick="toggle('esi102')">
-  <h2>ESI 102 – enterpreneurial studies</h2>
+  <h2>ESI 102 – Entrepreneurial Studies</h2>
   <div id="esi102" class="topics">
-    <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" target="_blank" download>Dr towobola outline</a>
-    <a href="https://docs.google.com/presentation/d/1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true download>Dr ayinla jamiu</a>
+    <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" target="_blank" download>📄 Dr Towobola Outline</a>
+    <a href="https://docs.google.com/presentation/d/1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW/edit?usp=drivesdk" download>📊 Dr Ayinla Jamiu</a>
   </div>
 </div>
 
