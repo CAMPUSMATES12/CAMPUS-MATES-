@@ -4,12 +4,22 @@
   <meta charset="UTF-8" />
   <title>CampusMate – Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f4ff;
       margin: 0;
       padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      max-height: 60px;
     }
 
     h1 {
@@ -141,32 +151,28 @@
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="CampusMate Logo" />
+  </header>
+
   <h1>🏠 CampusMate Dashboard</h1>
 
-  <!-- 🔹 Menu -->
   <div class="menu">
     <a onclick="toggleCourses()">📘 Courses</a>
     <a onclick="toggleProfile()">👤 Profile</a>
     <a href="about.html">ℹ️ About</a>
   </div>
 
-  <!-- 👤 Hidden Profile -->
+  <!-- Profile -->
   <div class="profile-box" id="profileBox">
     <p><strong>Name:</strong> <span id="name">Loading...</span></p>
     <p><strong>Faculty:</strong> <span id="faculty">Loading...</span></p>
   </div>
 
-  <!-- 📰 Campus News -->
-  <div class="news-section">
-    <h2>📰 Latest Campus News</h2>
-    <div id="newsContainer">Loading...</div>
-  </div>
-
-  <!-- 📘 Courses Section -->
+  <!-- Courses -->
   <div class="courses-section" id="coursesSection" style="display: none;">
     <h2 style="text-align:center; color:#2d87f0;">📘 100-Level Course Materials</h2>
 
-    <!-- Courses Here -->
     <div class="course" onclick="toggle('mth102')">
       <h3>MTH 102 – Mathematics</h3>
       <div id="mth102" class="topics">
@@ -231,38 +237,23 @@
     </div>
   </div>
 
-  <!-- 🔚 Logout -->
+  <!-- News -->
+  <div class="news-section">
+    <h2>📰 Latest Campus News</h2>
+    <div id="newsContainer">Loading...</div>
+  </div>
+
+  <!-- Logout -->
   <div class="logout-btn">
     <a href="index.html">🚪 Logout</a>
   </div>
-
-  <!-- 🔧 Scripts -->
-  <script>
-    document.getElementById("name").innerText = localStorage.getItem("cm_name") || "Unknown";
-    document.getElementById("faculty").innerText = localStorage.getItem("cm_faculty") || "Unknown";
-
-    function toggleProfile() {
-      const box = document.getElementById("profileBox");
-      box.style.display = box.style.display === "none" ? "block" : "none";
-    }
-
-    function toggleCourses() {
-      const courses = document.getElementById("coursesSection");
-      courses.style.display = courses.style.display === "none" ? "block" : "none";
-    }
-
-    function toggle(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === "block" ? "none" : "block";
-    }
-  </script>
 
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
     const supabase = createClient(
       "https://cjwhdivmefdzzlpruazi.supabase.co",
-      "YOUR_PUBLIC_SUPABASE_KEY"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     );
 
     async function loadNews() {
@@ -288,7 +279,40 @@
       `).join("");
     }
 
+    async function loadProfile() {
+      const { data, error } = await supabase.auth.getUser();
+      if (data.user) {
+        const userId = data.user.id;
+        const { data: profile } = await supabase
+          .from("users")
+          .select("name, faculty")
+          .eq("id", userId)
+          .single();
+
+        document.getElementById("name").innerText = profile?.name || "Unknown";
+        document.getElementById("faculty").innerText = profile?.faculty || "Unknown";
+      }
+    }
+
     loadNews();
+    loadProfile();
+  </script>
+
+  <script>
+    function toggleProfile() {
+      const box = document.getElementById("profileBox");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function toggleCourses() {
+      const courses = document.getElementById("coursesSection");
+      courses.style.display = courses.style.display === "none" ? "block" : "none";
+    }
+
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
   </script>
 </body>
 </html>
