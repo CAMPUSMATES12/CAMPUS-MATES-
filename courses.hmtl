@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampusMate – Courses</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4ff;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2d87f0;
+    }
+
+    .course {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+
+    .course h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #2d87f0;
+    }
+
+    .topics {
+      display: none;
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .topics a {
+      display: block;
+      margin-bottom: 8px;
+      padding: 8px;
+      background: #e4efff;
+      color: #2d87f0;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    .topics a:hover {
+      background: #cfe2ff;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📘 100-Level Courses</h1>
+
+<!-- MTH 102 -->
+<div class="course" onclick="toggle('mth102')">
+  <h2>MTH 102 – Mathematics</h2>
+  <div id="mth102" class="topics">
+    <a href="https://docs.google.com/presentation/d/16dsguaE1YIGC74YtC8IuL7jjNAq28YWF/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>🧮 differentiatuon</a>
+  </div>
+</div>
+
+<!-- PHY 102 -->
+<div class="course" onclick="toggle('phy102')">
+  <h2>PHY 102 – Physics</h2>
+  <div id="phy102" class="topics">
+    <a href="https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>⚡ Transformers</a>
+   <a href= "https://docs.google.com/presentation/d/1HD_3nKuIBcV-bqNtTPCa7jEA897FZFXH/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" downaload transformers 2</a>
+  </div>
+</div>
+
+<!-- MCB 102 -->
+<div class="course" onclick="toggle('mcb102')">
+  <h2>MCB 102 – Microbiology (Intro)</h2>
+  <div id="mcb102" class="topics">
+    <a href="https://drive.google.com/uc?export=download&id=1o_QHTOPrSl1VumplRkkHj0gutyVU27Ov" target="_blank" download>🧫 Microbial Measurement</a>
+  </div> 
+</div>
+
+<!-- MCB 104 -->
+<div class="course" onclick="toggle('mcb104')">
+  <h2>MCB 104 – Microbiology (Lab)</h2>
+  <div id="mcb104" class="topics">
+    <a href="https://drive.google.com/file/d/1ly9_b9TwnMd-hGGbNTmgW2Sy9wJHgGDH/view?usp=drivesdk" download>🔬 Biosafety & Lab Skills</a>
+  </div>
+</div>
+
+<!-- CHM 102 -->
+<div class="course" onclick="toggle('chm102')">
+  <h2>CHM 102 – Chemistry</h2>
+  <div id="chm102" class="topics">
+    <a href="https://docs.google.com/presentation/d/1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true"download Chemistry Slides 102</a>
+  </div>
+</div>
+
+<!-- BIO 102 -->
+<div class="course" onclick="toggle('bio102')">
+  <h2>BIO 102 – Biology</h2>
+  <div id="bio102" class="topics">
+    <a href="https://docs.google.com/document/d/16xtYCZvg-LcX608dpKZNbhO4_LDLZyUw/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>🧬 Cell structure</a>
+     <a href="https://docs.google.com/presentation/d/1T3LusZfroYmNetOMq1tgYuS2A5hKzZxE/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true" download>BIO 102</a>
+  </div>
+</div> 
+<!-- COS 104 -->
+<div class="course" onclick="toggle('cos104')">
+  <h2>COS 104 – Computer Science</h2>
+  <div id="cos104" class="topics">
+    <a href="pdfs/intro-to-programming.pdf" download>💻 Intro to Programming</a>
+  </div>
+</div>
+
+<!-- ESI 102 -->
+<div class="course" onclick="toggle('esi102')">
+  <h2>ESI 102 – enterpreneurial studies</h2>
+  <div id="esi102" class="topics">
+    <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" target="_blank" download>Dr towobola outline</a>
+    <a href="https://docs.google.com/presentation/d/1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW/edit?usp=drivesdk&ouid=101021515149839146374&rtpof=true&sd=true download>Dr ayinla jamiu</a>
+  </div>
+</div>
+
+<!-- GST 104 -->
+<div class="course" onclick="toggle('gst104')">
+  <h2>GST 104 – Communication Skills</h2>
+  <div id="gst104" class="topics">
+    <a href="pdfs/communication.pdf" download>🗣️ Parts of Speech</a>
+  </div>
+</div>
+
+<script>
+  function toggle(id) {
+    const el = document.getElementById(id);
+    el.style.display = (el.style.display === "block") ? "none" : "block";
+  }
+</script>
+
+</body>
+</html>
