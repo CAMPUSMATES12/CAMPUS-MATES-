@@ -4,27 +4,47 @@
   <meta charset="UTF-8" />
   <title>CampusMate – Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f4ff;
       margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark {
+      background-color: #121212;
+      color: white;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: auto;
       padding: 20px;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 20px;
+    .header img {
+      height: 40px;
     }
 
-    header img {
-      max-height: 60px;
+    .theme-toggle-btn {
+      background: #2d87f0;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
     }
 
-    h1 {
-      text-align: center;
-      color: #2d87f0;
+    .dark .theme-toggle-btn {
+      background: #ddd;
+      color: black;
     }
 
     .menu {
@@ -53,6 +73,7 @@
     .profile-box {
       display: none;
       background: white;
+      color: black;
       padding: 25px;
       max-width: 500px;
       margin: 10px auto;
@@ -61,9 +82,9 @@
       text-align: center;
     }
 
-    .profile-box p {
-      font-size: 16px;
-      margin: 10px 0;
+    .dark .profile-box {
+      background: #1e1e1e;
+      color: white;
     }
 
     .news-section {
@@ -75,13 +96,18 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
-    .news-item {
-      margin-bottom: 20px;
+    .dark .news-section {
+      background: #1e1e1e;
+      color: white;
     }
 
     .news-item h3 {
       margin-bottom: 5px;
       color: #2d87f0;
+    }
+
+    .dark .news-item h3 {
+      color: #91b4ff;
     }
 
     .news-item small {
@@ -108,7 +134,6 @@
       background: #c71e2f;
     }
 
-    /* Courses style */
     .courses-section {
       max-width: 800px;
       margin: 40px auto;
@@ -123,10 +148,9 @@
       cursor: pointer;
     }
 
-    .course h3 {
-      margin: 0;
-      font-size: 18px;
-      color: #2d87f0;
+    .dark .course {
+      background: #1e1e1e;
+      color: white;
     }
 
     .topics {
@@ -145,17 +169,17 @@
       border-radius: 6px;
     }
 
-    .topics a:hover {
-      background: #cfe2ff;
+    .dark .topics a {
+      background: #2d3b55;
+      color: #90c3ff;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="CampusMate Logo" />
-  </header>
-
-  <h1>🏠 CampusMate Dashboard</h1>
+  <div class="header">
+    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="CampusMate Logo" />
+    <button class="theme-toggle-btn" onclick="toggleTheme()">🌗</button>
+  </div>
 
   <div class="menu">
     <a onclick="toggleCourses()">📘 Courses</a>
@@ -169,9 +193,15 @@
     <p><strong>Faculty:</strong> <span id="faculty">Loading...</span></p>
   </div>
 
+  <!-- News -->
+  <div class="news-section">
+    <h2>📰 Latest Campus News</h2>
+    <div id="newsContainer">Loading...</div>
+  </div>
+
   <!-- Courses -->
   <div class="courses-section" id="coursesSection" style="display: none;">
-    <h2 style="text-align:center; color:#2d87f0;">📘 100-Level Course Materials</h2>
+    <h2 style="text-align:center; color:#2d87f0;">📘 100-Level Courses</h2>
 
     <div class="course" onclick="toggle('mth102')">
       <h3>MTH 102 – Mathematics</h3>
@@ -188,14 +218,14 @@
     </div>
 
     <div class="course" onclick="toggle('mcb102')">
-      <h3>MCB 102 – Microbiology (Intro)</h3>
+      <h3>MCB 102 – Microbiology</h3>
       <div id="mcb102" class="topics">
         <a href="https://drive.google.com/uc?export=download&id=1o_QHTOPrSl1VumplRkkHj0gutyVU27Ov" target="_blank" download>🧫 Microbial Measurement</a>
       </div>
     </div>
 
     <div class="course" onclick="toggle('mcb104')">
-      <h3>MCB 104 – Microbiology (Lab)</h3>
+      <h3>MCB 104 – Micro Lab</h3>
       <div id="mcb104" class="topics">
         <a href="https://drive.google.com/file/d/1ly9_b9TwnMd-hGGbNTmgW2Sy9wJHgGDH/view?usp=drivesdk" download>🔬 Biosafety & Lab Skills</a>
       </div>
@@ -237,25 +267,60 @@
     </div>
   </div>
 
-  <!-- News -->
-  <div class="news-section">
-    <h2>📰 Latest Campus News</h2>
-    <div id="newsContainer">Loading...</div>
-  </div>
-
-  <!-- Logout -->
   <div class="logout-btn">
     <a href="index.html">🚪 Logout</a>
   </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    function toggleProfile() {
+      const box = document.getElementById("profileBox");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+
+    function toggleCourses() {
+      const section = document.getElementById("coursesSection");
+      section.style.display = section.style.display === "none" ? "block" : "none";
+    }
+
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+  </script>
 
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
     const supabase = createClient(
       "https://cjwhdivmefdzzlpruazi.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqd2hkaXZtZWZkenpscHJ1YXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4Nzk0MzMsImV4cCI6MjA2NjQ1NTQzM30.T4SwzkP1HTOEzN8zRtH_fMIbiiqJcOLFVeM_ndgTn08"
     );
 
+    // Load profile
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (user) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("full_name, faculty")
+          .eq("id", user.id)
+          .single();
+        if (data) {
+          document.getElementById("name").innerText = data.full_name;
+          document.getElementById("faculty").innerText = data.faculty;
+        }
+      }
+    });
+
+    // Load news
     async function loadNews() {
       const { data, error } = await supabase
         .from("news")
@@ -279,40 +344,7 @@
       `).join("");
     }
 
-    async function loadProfile() {
-      const { data, error } = await supabase.auth.getUser();
-      if (data.user) {
-        const userId = data.user.id;
-        const { data: profile } = await supabase
-          .from("users")
-          .select("name, faculty")
-          .eq("id", userId)
-          .single();
-
-        document.getElementById("name").innerText = profile?.name || "Unknown";
-        document.getElementById("faculty").innerText = profile?.faculty || "Unknown";
-      }
-    }
-
     loadNews();
-    loadProfile();
-  </script>
-
-  <script>
-    function toggleProfile() {
-      const box = document.getElementById("profileBox");
-      box.style.display = box.style.display === "none" ? "block" : "none";
-    }
-
-    function toggleCourses() {
-      const courses = document.getElementById("coursesSection");
-      courses.style.display = courses.style.display === "none" ? "block" : "none";
-    }
-
-    function toggle(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === "block" ? "none" : "block";
-    }
   </script>
 </body>
 </html>
