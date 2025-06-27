@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <title>CampusMate – Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#3e64ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
   <style>
     body {
@@ -14,6 +17,7 @@
       color: #333;
       transition: background 0.3s, color 0.3s;
     }
+
     .dark {
       background-color: #121212;
       color: white;
@@ -59,14 +63,15 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
+      left: -100%;
       width: 250px;
       height: 100%;
       background: #ffffff;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       padding: 20px;
       transition: left 0.3s ease;
-      z-index: 1000;
+      z-index: 9999;
+      overflow-y: auto;
     }
 
     .sidebar.dark {
@@ -197,8 +202,7 @@
     <a href="about.html">ℹ️ About</a>
     <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
   </div>
-
-  <div class="content">
+<div class="content">
     <div id="news" class="section active news-section">
       <h2>📰 Latest Campus News</h2>
       <div class="news-item">
@@ -279,7 +283,7 @@
 
 <!-- ESI 102 – Entrepreneurship studies -->
 <div class="course" onclick="toggle('esi102')">
-  <h3>ESI 102 – Entrepreneurship studies</h3>
+  <h3>ESI 102 – Entrepreneurship</h3>
   <div id="esi102" class="topics">
   <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" download>📄 Dr Towobola Outline</a>
     <a href="https://drive.google.com/uc?export=download&id=1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW" download>📊 Dr Ayinla Jamiu</a>
@@ -294,11 +298,13 @@
 </div>
     </div>
  <script>
-    const sidebar = document.getElementById("sidebar");
+const sidebar = document.getElementById("sidebar");
+
     function toggleSidebar() {
       sidebar.classList.toggle("show-sidebar");
       sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
     }
+
     function toggleTheme() {
       document.body.classList.toggle("dark");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
@@ -306,9 +312,11 @@
         sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
       }
     }
+
     if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
     }
+
     function showSection(id) {
       document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
@@ -320,10 +328,21 @@
       };
       document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
     }
+
     function toggle(id) {
       const el = document.getElementById(id);
       el.style.display = el.style.display === "block" ? "none" : "block";
     }
+
+    document.addEventListener("click", function (e) {
+      if (
+        sidebar.classList.contains("show-sidebar") &&
+        !sidebar.contains(e.target) &&
+        !e.target.classList.contains("menu-icon")
+      ) {
+        sidebar.classList.remove("show-sidebar");
+      }
+    });
   </script>
 </body>
 </html>
