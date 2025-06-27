@@ -30,6 +30,7 @@
       padding: 15px 20px;
       background: #3e64ff;
       color: white;
+      flex-wrap: wrap;
     }
 
     .header-left {
@@ -58,6 +59,22 @@
       padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
+    }
+
+    #searchInput {
+      padding: 6px 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+      margin-left: 10px;
+      background: white;
+      color: #333;
+    }
+
+    .dark #searchInput {
+      background: #2a2a2a;
+      color: white;
     }
 
     .sidebar {
@@ -192,8 +209,10 @@
       <button class="menu-icon" onclick="toggleSidebar()">☰</button>
       <span id="section-name">Home</span>
     </div>
-    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" height="30" />
-    <button class="theme-toggle-btn" onclick="toggleTheme()">🌗</button>
+    <div style="display: flex; align-items: center;">
+      <input type="text" id="searchInput" placeholder="🔍 Search..." onkeyup="searchCourses()" />
+      <button class="theme-toggle-btn" onclick="toggleTheme()">🌗</button>
+    </div>
   </div>
 
   <div class="sidebar" id="sidebar">
@@ -202,21 +221,15 @@
     <a href="about.html">ℹ️ About</a>
     <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
   </div>
-<div class="content">
+
+  <div class="content">
     <div id="news" class="section active news-section">
+      <!-- Your news items here -->
       <h2>📰 Latest Campus News</h2>
       <div class="news-item">
         <h3>📢 UPDATE</h3>
-        <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
-        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
-      </div>
-      <div class="news-item">
-        <img src="https://i.postimg.cc/tgZtsfQM/IMG-6974.jpg" style="max-width:100%; border-radius:10px;" />
-     <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
-     <div class="news-item">
-  <img src="https://i.postimg.cc/vTQKTqT8/e8284b07-46b3-4802-b28f-86153cd393b5.jpg" style="max-width:100%; border-radius:10px;" />
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
+        <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" />
+        <p>Posted on June 27, 2025</p>
       </div>
     </div>
 
@@ -321,17 +334,37 @@ const sidebar = document.getElementById("sidebar");
       document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
       sidebar.classList.remove("show-sidebar");
-
-      const sectionName = {
+      document.getElementById("section-name").innerText = {
         news: "Home",
         courses: "Courses"
-      };
-      document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+      }[id] || "CampusMate";
     }
 
     function toggle(id) {
       const el = document.getElementById(id);
       el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+
+    function searchCourses() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const courses = document.querySelectorAll(".course");
+
+      courses.forEach(course => {
+        const title = course.querySelector("h3").innerText.toLowerCase();
+        const links = course.querySelectorAll(".topics a");
+        let match = title.includes(query);
+        
+        links.forEach(link => {
+          if (link.innerText.toLowerCase().includes(query)) {
+            link.style.display = "block";
+            match = true;
+          } else {
+            link.style.display = "none";
+          }
+        });
+
+        course.style.display = match ? "block" : "none";
+      });
     }
 
     document.addEventListener("click", function (e) {
