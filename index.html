@@ -48,37 +48,43 @@
       margin-bottom: 10px;
     }
 
-    .download-btn {
-      background: #e63946; /* 🔴 Red */
-      color: white;
-      padding: 15px 30px;
-      font-size: 18px;
+    .button-row {
+      margin-top: 30px;
+    }
+
+    .download-btn, .website-btn {
+      padding: 15px 25px;
+      font-size: 16px;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
-      margin-bottom: 15px;
+      margin: 10px;
       transition: background 0.3s;
+    }
+
+    .download-btn {
+      background: #2d87f0;
+      color: white;
     }
 
     .download-btn:hover {
-      background: #c71e2f;
-    }
-
-    .web-btn {
-      background: #2d87f0; /* 🔵 Blue */
-      color: white;
-      padding: 13px 28px;
-      font-size: 17px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      transition: background 0.3s;
-    }
-
-    .web-btn:hover {
       background: #155fd4;
+    }
+
+    .website-btn {
+      background: #10b981;
+      color: white;
+    }
+
+    .website-btn:hover {
+      background: #059669;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: -8px;
     }
   </style>
 </head>
@@ -90,7 +96,7 @@
   </div>
 
   <div class="content">
-    <!-- Replaced Screenshot with CampusMate Logo -->
+    <!-- CampusMate Logo -->
     <img class="screenshot" src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="CampusMate Logo">
 
     <ul class="features">
@@ -100,16 +106,19 @@
       <li>⚡ Fast, offline-capable progressive app experience</li>
     </ul>
 
-    <!-- 📥 Download APK -->
-    <a class="download-btn" href="https://drive.google.com/uc?export=download&id=1BhPh_3kT-VXYr9LpnIlcArKR_Z0a6laH" target="_blank">
-      📥 Download Now
-    </a>
-    <br/>
+    <div class="button-row">
+      <!-- Download Button (Android only) -->
+      <a class="download-btn" href="https://drive.google.com/uc?export=download&id=1BhPh_3kT-VXYr9LpnIlcArKR_Z0a6laH" target="_blank">
+        📥 Download App (Android)
+      </a>
 
-    <!-- 🌐 Continue as Website -->
-    <a class="web-btn" href="https://campusmates12.github.io/CAMPUS-MATES-/home.html">
-      🌐 Continue as Website
-    </a>
+      <!-- Continue as Website (goes straight to home.html) -->
+      <a class="website-btn" href="https://campusmates12.github.io/CAMPUS-MATES-/home.html">
+        🌐 Continue as Website
+      </a>
+    </div>
+
+    <p class="note">📱 Download is for Android users only</p>
   </div>
 
 </body>
