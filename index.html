@@ -49,7 +49,7 @@
     }
 
     .download-btn {
-      background: #2d87f0;
+      background: #e63946; /* 🔴 Red */
       color: white;
       padding: 15px 30px;
       font-size: 18px;
@@ -57,10 +57,27 @@
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
+      margin-bottom: 15px;
       transition: background 0.3s;
     }
 
     .download-btn:hover {
+      background: #c71e2f;
+    }
+
+    .web-btn {
+      background: #2d87f0; /* 🔵 Blue */
+      color: white;
+      padding: 13px 28px;
+      font-size: 17px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .web-btn:hover {
       background: #155fd4;
     }
   </style>
@@ -83,9 +100,15 @@
       <li>⚡ Fast, offline-capable progressive app experience</li>
     </ul>
 
-    <!-- Download Button (Direct APK Link) -->
+    <!-- 📥 Download APK -->
     <a class="download-btn" href="https://drive.google.com/uc?export=download&id=1BhPh_3kT-VXYr9LpnIlcArKR_Z0a6laH" target="_blank">
       📥 Download Now
+    </a>
+    <br/>
+
+    <!-- 🌐 Continue as Website -->
+    <a class="web-btn" href="https://campusmates12.github.io/CAMPUS-MATES-/home.html">
+      🌐 Continue as Website
     </a>
   </div>
 
