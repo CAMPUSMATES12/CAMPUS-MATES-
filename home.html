@@ -6,20 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#002F6C" />
   <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
-<!-- OneSignal Web Push SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7", // Replace with your own App ID if different
-      notifyButton: {
-        enable: true
-      },
-      allowLocalhostAsSecureOrigin: true
+
+  <!-- OneSignal Web Push SDK -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7",
+        notifyButton: {
+          enable: true,
+        },
+        allowLocalhostAsSecureOrigin: true
+      });
     });
-  });
-</script>
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -29,174 +31,107 @@
       color: #333;
     }
 
-    .dark {
-      background-color: #121212;
-      color: white;
-    }
+    .dark { background-color: #121212; color: white; }
 
     .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: #002F6C;
-      color: white;
-      flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 20px; background: #002F6C; color: white; flex-wrap: wrap;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .header-left { display: flex; align-items: center; gap: 10px; }
     .menu-icon {
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
+      font-size: 24px; background: none; border: none; color: white; cursor: pointer;
     }
 
     .theme-toggle-btn {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2); color: white; border: none;
+      padding: 6px 10px; border-radius: 6px; cursor: pointer;
     }
 
     .search-bar {
-      padding: 6px;
-      border-radius: 4px;
-      border: none;
-      margin-left: 10px;
+      padding: 6px; border-radius: 4px; border: none; margin-left: 10px;
     }
 
     .sidebar {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 250px;
-      height: 100%;
-      background: #fff;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: left 0.3s ease;
-      z-index: 9999;
-      overflow-y: auto;
+      position: fixed; top: 0; left: -100%; width: 250px; height: 100%;
+      background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      padding: 20px; transition: left 0.3s ease; z-index: 9999; overflow-y: auto;
     }
 
-    .sidebar.dark {
-      background: #1e1e1e;
+    .sidebar.dark { background: #1e1e1e; }
+    .show-sidebar { left: 0 !important; }
+
+    .sidebar img {
+      width: 100px; margin: 0 auto 20px auto; display: block;
+      border-radius: 10px;
     }
 
     .sidebar a {
-      display: block;
-      padding: 12px;
-      text-decoration: none;
-      color: #002F6C;
-      font-weight: bold;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      background: #ecf0ff;
+      display: block; padding: 12px; text-decoration: none; color: #002F6C;
+      font-weight: bold; border-radius: 6px; margin-bottom: 10px; background: #ecf0ff;
     }
 
     .dark .sidebar a {
-      background: #2d3b55;
-      color: #90c3ff;
-    }
-
-    .show-sidebar {
-      left: 0 !important;
+      background: #2d3b55; color: #90c3ff;
     }
 
     .content {
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
+      padding: 20px; max-width: 1000px; margin: auto;
     }
 
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
+    .section { display: none; }
+    .section.active { display: block; }
 
     .course {
-      background: #ffffff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
-      cursor: pointer;
+      background: #ffffff; padding: 15px; margin-bottom: 15px;
+      border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.05); cursor: pointer;
     }
 
-    .dark .course {
-      background: #2a2a2a;
-    }
+    .dark .course { background: #2a2a2a; }
 
     .topics {
-      display: none;
-      margin-top: 10px;
-      padding-left: 10px;
-      flex-wrap: wrap;
-      gap: 10px;
-      display: flex;
+      display: none; margin-top: 10px; padding-left: 10px;
+      display: flex; flex-wrap: wrap; gap: 10px;
     }
 
     .topics a {
-      background: #e0ebff;
-      padding: 10px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #002F6C;
-      flex: 1 1 auto;
-      max-width: 180px;
-      text-align: center;
+      background: #e0ebff; padding: 10px 12px; border-radius: 6px;
+      text-decoration: none; color: #002F6C; flex: 1 1 45%; text-align: center;
     }
 
     .dark .topics a {
-      background: #2d3b55;
-      color: #90c3ff;
+      background: #2d3b55; color: #90c3ff;
     }
 
     .news-item {
-      background: #f0f4ff;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      padding: 10px;
+      background: #f0f4ff; margin-bottom: 20px; border-radius: 10px; padding: 10px;
     }
 
-    .dark .news-item {
-      background: #2a2a2a;
-    }
+    .dark .news-item { background: #2a2a2a; }
 
     .feedback-form input,
     .feedback-form textarea {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      width: 100%; margin-bottom: 10px; padding: 10px;
+      border-radius: 6px; border: 1px solid #ccc;
     }
 
     .feedback-form button {
-      padding: 10px;
-      border: none;
-      background: #002F6C;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
+      padding: 10px; border: none; background: #002F6C;
+      color: white; border-radius: 6px; cursor: pointer;
     }
 
     .calendar-link {
-      background: #f0f4ff;
-      padding: 15px;
-      border-radius: 10px;
+      background: #f0f4ff; padding: 15px; border-radius: 10px;
+    }
+
+    .dark .calendar-link { background: #2a2a2a; color: white; }
+
+    .about-text {
+      background: #fff; padding: 15px; border-radius: 8px; line-height: 1.6;
+    }
+
+    .dark .about-text {
+      background: #2a2a2a; color: #ccc;
     }
   </style>
 </head>
@@ -213,26 +148,24 @@
   </div>
 
   <div class="sidebar" id="sidebar">
+    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
     <a href="#" onclick="showSection('news')">🏠 Home</a>
     <a href="#" onclick="showSection('courses')">📘 Courses</a>
-    <a href="#" onclick="showSection('calendar')">📆 Academic Calendar</a>
+    <a href="#" onclick="showSection('calendar')">📆 Calendar</a>
     <a href="#" onclick="showSection('feedback')">💬 Feedback</a>
+    <a href="#" onclick="showSection('about')">ℹ️ About</a>
+    <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
   </div>
 
   <div class="content">
-    <!-- News -->
     <div id="news" class="section active">
       <h2>📰 Latest Campus News</h2>
       <div class="news-item">
-        <h3>📢 UPDATE</h3>
+        <h3>📢 News Title</h3>
         <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
         <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
-      <div class="news-item">
-        <img src="https://i.postimg.cc/tgZtsfQM/IMG-6974.jpg" style="max-width:100%; border-radius:10px;" />
-     <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
-  <div class="news-item">
-  <img src="https://i.postimg.cc/vTQKTqT8/e8284b07-46b3-4802-b28f-86153cd393b5.jpg" style="max-width:100%; border-radius:10px;" />
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
+      </div>
+    </div>
       </div>
     </div>
 
@@ -313,28 +246,31 @@
       </div>
     </div>
 
-    <!-- Calendar -->
     <div id="calendar" class="section">
       <h2>📆 Academic Calendar</h2>
       <p class="calendar-link">📥 <a href="https://drive.google.com/file/d/1c1t8tObbiGOGjMQp4aMfVOXQ5rUBXQJ4/view" target="_blank">View / Download Calendar</a></p>
     </div>
 
-    <!-- Feedback -->
     <div id="feedback" class="section">
       <h2>💬 Student Feedback</h2>
       <form class="feedback-form" action="https://formsubmit.co/YOUR_EMAIL" method="POST">
         <input type="text" name="name" placeholder="Your Full Name" required />
-        <input type="email" name="email" placeholder="Your Email Address" required />
+        <input type="email" name="email" placeholder="Your Email" required />
         <textarea name="message" rows="5" placeholder="Your feedback..." required></textarea>
         <button type="submit">📤 Submit</button>
-
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://campusmates12.github.io/CAMPUS-MATES-/home.html">
       </form>
     </div>
+
+    <div id="about" class="section">
+      <h2>ℹ️ About CampusMate</h2>
+      <div class="about-text">
+        CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, calendar info, and more in one place.
+      </div>
+    </div>
   </div>
 
-  <!-- SCRIPT -->
   <script>
     const sidebar = document.getElementById("sidebar");
     const searchInput = document.getElementById("searchInput");
@@ -346,8 +282,8 @@
 
     function toggleTheme() {
       document.body.classList.toggle("dark");
-      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
       sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     }
 
     if (localStorage.getItem("theme") === "dark") {
@@ -359,19 +295,19 @@
       document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
       sidebar.classList.remove("show-sidebar");
-
       const sectionName = {
         news: "Home",
         courses: "Courses",
-        calendar: "Academic Calendar",
-        feedback: "Feedback"
+        calendar: "Calendar",
+        feedback: "Feedback",
+        about: "About"
       };
       document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
     }
 
     function toggle(id) {
       const el = document.getElementById(id);
-      el.style.display = el.style.display === "block" ? "none" : "flex";
+      el.style.display = el.style.display === "flex" ? "none" : "flex";
     }
 
     searchInput.addEventListener("input", function () {
