@@ -15,14 +15,11 @@
       padding: 0;
       background-color: #f5f9ff;
       color: #333;
-      transition: background 0.3s, color 0.3s;
     }
-
     .dark {
       background-color: #121212;
       color: white;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -32,13 +29,11 @@
       color: white;
       flex-wrap: wrap;
     }
-
     .header-left {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .menu-icon {
       font-size: 24px;
       background: none;
@@ -46,12 +41,6 @@
       color: white;
       cursor: pointer;
     }
-
-    #section-name {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
     .theme-toggle-btn {
       background: rgba(255, 255, 255, 0.2);
       color: white;
@@ -59,42 +48,32 @@
       padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
-    }
-
-    #searchInput {
-      padding: 6px 10px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      outline: none;
       margin-left: 10px;
-      background: white;
-      color: #333;
     }
-
-    .dark #searchInput {
-      background: #2a2a2a;
-      color: white;
+    .search-bar {
+      margin-left: 10px;
     }
-
+    .search-bar input {
+      padding: 6px;
+      border-radius: 4px;
+      border: none;
+    }
     .sidebar {
       position: fixed;
       top: 0;
       left: -100%;
       width: 250px;
       height: 100%;
-      background: #ffffff;
+      background: #fff;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       padding: 20px;
       transition: left 0.3s ease;
       z-index: 9999;
       overflow-y: auto;
     }
-
     .sidebar.dark {
       background: #1e1e1e;
     }
-
     .sidebar a {
       display: block;
       padding: 12px;
@@ -105,101 +84,62 @@
       margin-bottom: 10px;
       background: #ecf0ff;
     }
-
     .dark .sidebar a {
       background: #2d3b55;
       color: #90c3ff;
     }
-
-    .sidebar a:hover {
-      background: #d0e4ff;
-    }
-
     .show-sidebar {
       left: 0 !important;
     }
-
     .content {
       padding: 20px;
       max-width: 1000px;
       margin: auto;
     }
-
     .section {
       display: none;
     }
-
     .section.active {
       display: block;
     }
-
-    .news-section, .courses-section {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
-
-    .dark .news-section, .dark .courses-section {
-      background: #1e1e1e;
-      color: white;
-    }
-
-    .news-item {
-      background: #f0f4ff;
-      margin-bottom: 20px;
-      border-radius: 10px;
+    .feedback-form button {
       padding: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
-    }
-
-    .dark .news-item {
-      background: #2a2a2a;
-    }
-
-    .news-item img {
-      max-width: 100%;
-      border-radius: 10px;
-    }
-
-    .news-item p {
-      text-align: center;
-      font-size: 14px;
-      color: gray;
-    }
-
-    .course {
-      background: #ffffff;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+      border: none;
+      background: #3e64ff;
+      color: white;
+      border-radius: 6px;
       cursor: pointer;
     }
-
-    .dark .course {
-      background: #2a2a2a;
+    .calendar-link {
+      background: #f0f4ff;
+      padding: 15px;
+      border-radius: 10px;
     }
-
+    .course {
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
     .topics {
+      margin-left: 15px;
       display: none;
-      margin-top: 10px;
-      padding-left: 20px;
+      margin-top: 8px;
     }
-
     .topics a {
       display: block;
-      margin-bottom: 8px;
-      padding: 8px;
-      background: #e0ebff;
+      margin-bottom: 6px;
       color: #3e64ff;
       text-decoration: none;
-      border-radius: 6px;
     }
-
-    .dark .topics a {
-      background: #2d3b55;
-      color: #90c3ff;
+    .topics a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -209,8 +149,8 @@
       <button class="menu-icon" onclick="toggleSidebar()">☰</button>
       <span id="section-name">Home</span>
     </div>
-    <div style="display: flex; align-items: center;">
-      <input type="text" id="searchInput" placeholder="🔍 Search..." onkeyup="searchCourses()" />
+    <div class="header-right">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search..." />
       <button class="theme-toggle-btn" onclick="toggleTheme()">🌗</button>
     </div>
   </div>
@@ -218,27 +158,33 @@
   <div class="sidebar" id="sidebar">
     <a href="#" onclick="showSection('news')">🏠 Home</a>
     <a href="#" onclick="showSection('courses')">📘 Courses</a>
+    <a href="#" onclick="showSection('calendar')">📆 Academic Calendar</a>
+    <a href="#" onclick="showSection('feedback')">💬 Feedback</a>
     <a href="about.html">ℹ️ About</a>
     <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
   </div>
 
   <div class="content">
-    <div id="news" class="section active news-section">
-      <!-- Your news items here -->
+    <div id="news" class="section active">
       <h2>📰 Latest Campus News</h2>
       <div class="news-item">
         <h3>📢 UPDATE</h3>
-        <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" />
-        <p>Posted on June 27, 2025</p>
+        <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
+      </div>
+      <div class="news-item">
+        <img src="https://i.postimg.cc/tgZtsfQM/IMG-6974.jpg" style="max-width:100%; border-radius:10px;" />
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
+      </div>
+      <div class="news-item">
+        <img src="https://i.postimg.cc/vTQKTqT8/e8284b07-46b3-4802-b28f-86153cd393b5.jpg" style="max-width:100%; border-radius:10px;" />
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
       </div>
     </div>
-
     <div id="courses" class="section courses-section">
       <h2>📘 100-Level Courses</h2>
 
-      <!-- All your courses and topics inserted here -->
-      <!-- Keep scrolling for the full list -->
-      <!-- MTH 102 – Mathematics -->
+      <!-- MTH 102 -->
       <div class="course" onclick="toggle('mth102')">
         <h3>MTH 102 – Mathematics</h3>
         <div id="mth102" class="topics">
@@ -246,17 +192,17 @@
         </div>
       </div>
 
-      <!-- PHY 102 – Physics -->
+      <!-- PHY 102 -->
       <div class="course" onclick="toggle('phy102')">
         <h3>PHY 102 – Physics</h3>
         <div id="phy102" class="topics">
           <a href="https://drive.google.com/uc?export=download&id=1V7XFfyI9nxios2UDbtkpFkCc3pLFurmD" download>🔍 Optics</a>
-        <a href="https://docs.google.com/uc?export=download&id=1VDhlOydXNKmggzFoTIANIeY6hmWl7CEL" download>🔄 Mutual Inductors</a>
+          <a href="https://docs.google.com/uc?export=download&id=1VDhlOydXNKmggzFoTIANIeY6hmWl7CEL" download>🔄 Mutual Inductors</a>
           <a href="https://drive.google.com/uc?export=download&id=1A0xcGHq6tGKH32JlW75Il_-TmbDTVsFq" download>⚡ Transformers</a>
         </div>
       </div>
 
-      <!-- MCB 102 – Microbiology -->
+      <!-- MCB 102 -->
       <div class="course" onclick="toggle('mcb102')">
         <h3>MCB 102 – Microbiology</h3>
         <div id="mcb102" class="topics">
@@ -265,53 +211,75 @@
         </div>
       </div>
 
-      <!-- BIO 102 – Biology -->
-<div class="course" onclick="toggle('bio102')">
-  <h3>BIO 102 – Biology</h3>
-  <div id="bio102" class="topics">
-    <a href="https://docs.google.com/uc?export=download&id=1M_TsW3gEgGmC8We3XBP1NM-ZYzpCxu6N" download>🦁 Animal Kingdom</a>
-    <a href="https://docs.google.com/uc?export=download&id=1T3LusZfroYmNetOMq1tgYuS2A5hKzZxE" download>🌿 BIO 102 Slides</a>
-    <a href="https://docs.google.com/uc?export=download&id=16xtYCZvg-LcX608dpKZNbhO4_LDLZyUw" download>🧬 Cell Structure</a>   
-  </div>
-</div>
+      <!-- BIO 102 -->
+      <div class="course" onclick="toggle('bio102')">
+        <h3>BIO 102 – Biology</h3>
+        <div id="bio102" class="topics">
+          <a href="https://docs.google.com/uc?export=download&id=1M_TsW3gEgGmC8We3XBP1NM-ZYzpCxu6N" download>🦁 Animal Kingdom</a>
+          <a href="https://docs.google.com/uc?export=download&id=1T3LusZfroYmNetOMq1tgYuS2A5hKzZxE" download>🌿 BIO 102 Slides</a>
+          <a href="https://docs.google.com/uc?export=download&id=16xtYCZvg-LcX608dpKZNbhO4_LDLZyUw" download>🧬 Cell Structure</a>
+        </div>
+      </div>
 
-<!-- CHM 102 – Chemistry -->
-<div class="course" onclick="toggle('chm102')">
-  <h3>CHM 102 – Chemistry</h3>
-  <div id="chm102" class="topics">
-    <a href="https://drive.google.com/uc?export=download&id=1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7" download>🧪 Chemistry Slides</a>
-   <a href="https://docs.google.com/uc?export=download&id=1PXd1h3GJ6vk4IZAWaDq6-vlzpm8vvVXP" download>🍷 Alcohols, Esters, Carbonyl</a>
-    <a href="https://docs.google.com/uc?export=download&id=1cF3-W9EPAfM6NPqynrU4MmaYM4Y20MD6" download>🧪 Dr Adetoro Slide</a>
-  </div>
-</div>
+      <!-- CHM 102 -->
+      <div class="course" onclick="toggle('chm102')">
+        <h3>CHM 102 – Chemistry</h3>
+        <div id="chm102" class="topics">
+          <a href="https://drive.google.com/uc?export=download&id=1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7" download>🧪 Chemistry Slides</a>
+          <a href="https://docs.google.com/uc?export=download&id=1PXd1h3GJ6vk4IZAWaDq6-vlzpm8vvVXP" download>🍷 Alcohols, Esters, Carbonyl</a>
+          <a href="https://docs.google.com/uc?export=download&id=1cF3-W9EPAfM6NPqynrU4MmaYM4Y20MD6" download>🧪 Dr Adetoro Slide</a>
+        </div>
+      </div>
 
-<!-- COS 104 – Computer Science -->
-<div class="course" onclick="toggle('cos104')">
-  <h3>COS 104 – Computer Science</h3>
-  <div id="cos104" class="topics">
-    <a href="https://drive.google.com/uc?export=download&id=1eyx3Twg9o7D2o3b9EnG-PtvXkzDTvMmk" download>💻 Slide</a>
-    <a href="https://drive.google.com/uc?export=download&id=1vGJPTX7W1zuhDCjhfMql4MJ4H1OKeHDH" download>📘 Notes</a>
-  </div>
-</div>
+      <!-- COS 104 -->
+      <div class="course" onclick="toggle('cos104')">
+        <h3>COS 104 – Computer Science</h3>
+        <div id="cos104" class="topics">
+          <a href="https://drive.google.com/uc?export=download&id=1eyx3Twg9o7D2o3b9EnG-PtvXkzDTvMmk" download>💻 Slide</a>
+          <a href="https://drive.google.com/uc?export=download&id=1vGJPTX7W1zuhDCjhfMql4MJ4H1OKeHDH" download>📘 Notes</a>
+        </div>
+      </div>
 
-<!-- ESI 102 – Entrepreneurship studies -->
-<div class="course" onclick="toggle('esi102')">
-  <h3>ESI 102 – Entrepreneurship</h3>
-  <div id="esi102" class="topics">
-  <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" download>📄 Dr Towobola Outline</a>
-    <a href="https://drive.google.com/uc?export=download&id=1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW" download>📊 Dr Ayinla Jamiu</a>
-</div>
+      <!-- ESI 102 -->
+      <div class="course" onclick="toggle('esi102')">
+        <h3>ESI 102 – Entrepreneurship</h3>
+        <div id="esi102" class="topics">
+          <a href="https://docs.google.com/uc?export=download&id=1h7oQSpmhP7XInD9JOH9w-A6ufcT95Vo0" download>📄 Dr Towobola Outline</a>
+          <a href="https://drive.google.com/uc?export=download&id=1v-DYSMp0mU1S0sZGSZP1jx1rao2NMbaW" download>📊 Dr Ayinla Jamiu</a>
+        </div>
+      </div>
 
-<!-- GNS 104 – Communication in English -->
-<div class="course" onclick="toggle('gns104')">
-  <h3>GNS 104 – General Studies</h3>
-  <div id="gns104" class="topics">
-    <a href="https://docs.google.com/uc?export=download&id=13eDi92q7dt5_EfLe165duRL7EPKlbFve" download>📘 GNS 104 Material</a>
-  </div>
-</div>
+      <!-- GNS 104 -->
+      <div class="course" onclick="toggle('gns104')">
+        <h3>GNS 104 – General Studies</h3>
+        <div id="gns104" class="topics">
+          <a href="https://docs.google.com/uc?export=download&id=13eDi92q7dt5_EfLe165duRL7EPKlbFve" download>📘 GNS 104 Material</a>
+        </div>
+      </div>
     </div>
- <script>
-const sidebar = document.getElementById("sidebar");
+
+    <!-- ACADEMIC CALENDAR -->
+    <div id="calendar" class="section">
+      <h2>📆 Academic Calendar</h2>
+      <p>📥 <a href="https://drive.google.com/file/d/1c1t8tObbiGOGjMQp4aMfVOXQ5rUBXQJ4/view?usp=drivesdk" target="_blank">View / Download Academic Calendar</a></p>
+    </div>
+
+    <!-- FEEDBACK SECTION -->
+    <div id="feedback" class="section">
+      <h2>💬 Feedback Box</h2>
+      <form class="feedback-form" action="mailto:your-email@example.com" method="post" enctype="text/plain">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" rows="4" placeholder="Your message..." required></textarea>
+        <button type="submit">Send Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const searchInput = document.getElementById("searchInput");
 
     function toggleSidebar() {
       sidebar.classList.toggle("show-sidebar");
@@ -321,61 +289,40 @@ const sidebar = document.getElementById("sidebar");
     function toggleTheme() {
       document.body.classList.toggle("dark");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-      if (sidebar.classList.contains("show-sidebar")) {
-        sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
-      }
+      sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
     }
 
     if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
+      sidebar.classList.add("dark");
     }
 
     function showSection(id) {
       document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
       sidebar.classList.remove("show-sidebar");
-      document.getElementById("section-name").innerText = {
+
+      const sectionName = {
         news: "Home",
-        courses: "Courses"
-      }[id] || "CampusMate";
+        courses: "Courses",
+        calendar: "Academic Calendar",
+        feedback: "Feedback"
+      };
+      document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
     }
+
+    searchInput.addEventListener("input", function () {
+      const value = this.value.toLowerCase();
+      document.querySelectorAll(".course").forEach(course => {
+        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+      });
+    });
 
     function toggle(id) {
       const el = document.getElementById(id);
+      if (!el) return;
       el.style.display = el.style.display === "block" ? "none" : "block";
     }
-
-    function searchCourses() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const courses = document.querySelectorAll(".course");
-
-      courses.forEach(course => {
-        const title = course.querySelector("h3").innerText.toLowerCase();
-        const links = course.querySelectorAll(".topics a");
-        let match = title.includes(query);
-        
-        links.forEach(link => {
-          if (link.innerText.toLowerCase().includes(query)) {
-            link.style.display = "block";
-            match = true;
-          } else {
-            link.style.display = "none";
-          }
-        });
-
-        course.style.display = match ? "block" : "none";
-      });
-    }
-
-    document.addEventListener("click", function (e) {
-      if (
-        sidebar.classList.contains("show-sidebar") &&
-        !sidebar.contains(e.target) &&
-        !e.target.classList.contains("menu-icon")
-      ) {
-        sidebar.classList.remove("show-sidebar");
-      }
-    });
   </script>
 </body>
 </html>
