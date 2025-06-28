@@ -414,17 +414,16 @@
     </div>
   </div>
 
-  <script>
+  <!-- JavaScript -->
+<script>
   function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("show");
   }
 
-  // Close sidebar if clicked outside
+  // Close sidebar on outside click
   document.addEventListener("click", function (e) {
     const sidebar = document.getElementById("sidebar");
     const toggleBtn = document.getElementById("toggleBtn");
-
-    // Only close if clicked outside sidebar and not on toggle button
     if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
       sidebar.classList.remove("show");
     }
@@ -434,14 +433,18 @@
     document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
     document.getElementById(sectionId).classList.add("active");
 
-    // Update section title if you have one
     const title = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
     const sectionTitle = document.getElementById("section-title");
     if (sectionTitle) sectionTitle.innerText = title;
 
-    // Close sidebar
     document.getElementById("sidebar").classList.remove("show");
   }
+
+  function logout() {
+    alert("Logging out...");
+    // Add Supabase logout or redirect here if needed
+  }
 </script>
+
 </body>
 </html>
