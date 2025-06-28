@@ -414,37 +414,51 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
-<script>
-  function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("show");
-  }
-
-  // Close sidebar on outside click
-  document.addEventListener("click", function (e) {
+   <script>
     const sidebar = document.getElementById("sidebar");
-    const toggleBtn = document.getElementById("toggleBtn");
-    if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-      sidebar.classList.remove("show");
+    const searchInput = document.getElementById("searchInput");
+
+    function toggleSidebar() {
+      sidebar.classList.toggle("show-sidebar");
+      sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
     }
-  });
 
-  function navigateTo(sectionId) {
-    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-    document.getElementById(sectionId).classList.add("active");
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    }
 
-    const title = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-    const sectionTitle = document.getElementById("section-title");
-    if (sectionTitle) sectionTitle.innerText = title;
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      sidebar.classList.add("dark");
+    }
 
-    document.getElementById("sidebar").classList.remove("show");
-  }
+    function showSection(id) {
+      document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      sidebar.classList.remove("show-sidebar");
+      const sectionName = {
+        news: "Home",
+        courses: "Courses",
+        calendar: "Calendar",
+        feedback: "Feedback",
+        about: "About"
+      };
+      document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+    }
 
-  function logout() {
-    alert("Logging out...");
-    // Add Supabase logout or redirect here if needed
-  }
-</script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "flex" ? "none" : "flex";
+    }
 
+    searchInput.addEventListener("input", function () {
+      const value = this.value.toLowerCase();
+      document.querySelectorAll(".course").forEach(course => {
+        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+      });
+    });
+  </script>
 </body>
 </html>
