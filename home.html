@@ -4,7 +4,24 @@
   <meta charset="UTF-8" />
   <title>CampusMate – Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#002F6C" />
   <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
+
+  <!-- OneSignal Web Push SDK -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7",
+        notifyButton: {
+          enable: true,
+        },
+        allowLocalhostAsSecureOrigin: true
+      });
+    });
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -12,289 +29,213 @@
       padding: 0;
       background-color: #f5f9ff;
       color: #333;
-      transition: background 0.3s, color 0.3s;
     }
+
     .dark { background-color: #121212; color: white; }
+
     .header {
-      background: #002F6C;
-      color: white;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 20px; background: #002F6C; color: white; flex-wrap: wrap;
     }
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .menu-icon {
+      font-size: 24px; background: none; border: none; color: white; cursor: pointer;
     }
-    .header-logo img { height: 47px; }
-    .menu-btn {
-      font-size: 28px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      padding: 4px 10px;
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.2); color: white; border: none;
+      padding: 6px 10px; border-radius: 6px; cursor: pointer;
     }
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+
+    .search-bar {
+      padding: 6px; border-radius: 4px; border: none; margin-left: 10px;
     }
-    .search-icon, .theme-toggle {
-      background: #ffffff33;
-      border: none;
-      color: white;
-      border-radius: 6px;
-      font-size: 18px;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-    #searchInput {
-      display: none;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      width: 200px;
-      padding: 8px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      z-index: 1000;
-      background: white;
-    }
+
     .sidebar {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      width: 250px;
-      height: 100%;
-      background: #fff;
-      padding: 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-      overflow-y: auto;
-      transition: left 0.3s ease-in-out;
-      z-index: 999;
+      position: fixed; top: 0; left: -100%; width: 250px; height: 100%;
+      background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      padding: 20px; transition: left 0.3s ease; z-index: 9999; overflow-y: auto;
     }
-    .sidebar.show { left: 0; }
+
+    .sidebar.dark { background: #1e1e1e; }
+    .show-sidebar { left: 0 !important; }
+
     .sidebar img {
-      display: block;
-      margin: 0 auto 20px;
-      width: 100px;
+      width: 100px; margin: 0 auto 20px auto; display: block;
+      border-radius: 10px;
     }
+
     .sidebar a {
-      display: block;
-      padding: 12px;
-      background: #ecf0ff;
-      color: #002F6C;
-      text-decoration: none;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      font-weight: bold;
+      display: block; padding: 12px; text-decoration: none; color: #002F6C;
+      font-weight: bold; border-radius: 6px; margin-bottom: 10px; background: #ecf0ff;
+      cursor: pointer; /* Added cursor pointer */
     }
-    .dark .sidebar,
-    .dark .course,
-    .dark .topics .topic {
-      background: #1e1e1e;
-      color: #90c3ff;
+
+    .dark .sidebar a {
+      background: #2d3b55; color: #90c3ff;
     }
+
     .content {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
+      padding: 20px; max-width: 1000px; margin: auto;
     }
+
     .section { display: none; }
     .section.active { display: block; }
+
     .course {
-      background: white;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: #ffffff; padding: 15px; margin-bottom: 15px;
+      border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.05); cursor: pointer;
     }
-    .course h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+
+    .dark .course { background: #2a2a2a; }
+
     .topics {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
+      display: none; margin-top: 10px; padding-left: 10px;
+      display: flex; flex-wrap: wrap; gap: 10px;
     }
-    .topics a.download,
-    .topics a.play {
-      display: inline-block;
-      background: #004aad;
-      color: white;
-      padding: 10px 16px;
-      text-align: center;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
+
+    .topics a {
+      background: #e0ebff; padding: 10px 12px; border-radius: 6px;
+      text-decoration: none; color: #002F6C; flex: 1 1 45%; text-align: center;
     }
-    .topics a.download:hover,
-    .topics a.play:hover {
-      background: #003580;
+
+    .dark .topics a {
+      background: #2d3b55; color: #90c3ff;
     }
-    form.feedback-form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      max-width: 600px;
+
+    .news-item {
+      background: #f0f4ff; margin-bottom: 20px; border-radius: 10px; padding: 10px;
     }
+
+    .dark .news-item { background: #2a2a2a; }
+
     .feedback-form input,
     .feedback-form textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+      width: 100%; margin-bottom: 10px; padding: 10px;
+      border-radius: 6px; border: 1px solid #ccc;
     }
+
     .feedback-form button {
-      background: #002F6C;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
+      padding: 10px; border: none; background: #002F6C;
+      color: white; border-radius: 6px; cursor: pointer;
+    }
+
+    .calendar-link {
+      background: #f0f4ff; padding: 15px; border-radius: 10px;
+    }
+
+    .dark .calendar-link { background: #2a2a2a; color: white; }
+
+    .about-text {
+      background: #fff; padding: 15px; border-radius: 8px; line-height: 1.6;
+    }
+
+    .dark .about-text {
+      background: #2a2a2a; color: #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-    <div class="header-logo">
-      <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo">
-      <span id="section-title">Home</span>
-    </div>
-    <div class="top-actions">
-      <button class="search-icon" onclick="toggleSearch()">🔍</button>
-      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    </div>
-    <input type="text" id="searchInput" placeholder="Search courses...">
+ <div class="header">
+  <div class="header-left" style="align-items:center; gap: 10px;">
+    <!-- Your logo -->
+    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="CampusMate Logo" style="height:40px; border-radius:6px;" />
+    
+    <!-- Sidebar toggle button -->
+    <button class="menu-icon" onclick="toggleSidebar()">☰</button>
+    
+    <span id="section-name">Home</span>
   </div>
 
+  <div class="header-right" style="display:flex; align-items:center; gap:10px;">
+    <!-- Search button -->
+    <button class="theme-toggle-btn" aria-label="Search" onclick="alert('Search courses! 🔎');">
+      🔎
+    </button>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+</div>
+
   <div class="sidebar" id="sidebar">
-    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
-    <a href="#" onclick="navigateTo('home')">🏠 Home</a>
-    <a href="#" onclick="navigateTo('courses')">📘 Courses</a>
-    <a href="#" onclick="navigateTo('calendar')">📆 Calendar</a>
-    <a href="#" onclick="navigateTo('feedback')">💬 Feedback</a>
-    <a href="#" onclick="navigateTo('about')">ℹ️ About</a>
-    <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
+    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
+    <a href="#" onclick="showSection('home'); return false;">🏠 Home</a>
+    <a href="#" onclick="showSection('courses'); return false;">📘 Courses</a>
+    <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
+    <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
+    <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
+    <a href="https://portal.uniosun.edu.ng" target="_blank" rel="noopener noreferrer">🎓 School Portal</a>
   </div>
 
   <div class="content">
-  <div id="home" class="section active">
-    <h2>Campus News</h2>
+    <div id="home" class="section active">
+      <h2>Campus News</h2>
 
-    <!-- First News -->
-<div class="course">
-  <h3>📢 LIS 112 Manual Is Compulsory</h3>
-  <p>‼️‼️‼️‼️‼️‼️‼️‼️ <br><br>
-  <strong>From the Department:</strong><br><br>
-  The LIS manual is <strong>compulsory</strong> for all 100 level students offering LIS 112. The upcoming test and exams will be taken from the manual.<br><br>
-  Course reps should collect the money (<strong>₦1500</strong>) from the students and write their names down for documentation. Payment is to be made to your class rep, and the manual collected at the departmental office.<br><br>
-  <strong>📦 Collection:</strong> Manual will be ready starting from next week.<br><br>
-  <strong>⚠️ NOTE:</strong> It is very compulsory to get the LIS manual.<br><br>
-  ✅ Thank you.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025 at 4:06Pm</p>
-</div>
-    
-    <div class="course">
-      <h3> General Announcement</h3>
-      <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
-      <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
+      <!-- First News -->
+      <div class="course">
+        <h3>📢 LIS 112 Manual Is Compulsory</h3>
+        <p>‼️‼️‼️‼️‼️‼️‼️‼️ <br><br>
+          <strong>From the Department:</strong><br><br>
+          The LIS manual is <strong>compulsory</strong> for all 100 level students offering LIS 112. The upcoming test and exams will be taken from the manual.<br><br>
+          Course reps should collect the money (<strong>₦1500</strong>) from the students and write their names down for documentation. Payment is to be made to your class rep, and the manual collected at the departmental office.<br><br>
+          <strong>📦 Collection:</strong> Manual will be ready starting from next week.<br><br>
+          <strong>⚠️ NOTE:</strong> It is very compulsory to get the LIS manual.<br><br>
+          ✅ Thank you.
+        </p>
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025 at 4:06Pm</p>
+      </div>
+      
+      <div class="course">
+        <h3> General Announcement</h3>
+        <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
+      </div>
+
+      <!-- STA 112 Class News -->
+      <div class="course">
+        <h3> STA 112 (Probability) Class Update</h3>
+        <p>
+          Good afternoon, guys. <br><br>
+          To whom it may concern, ✅✅✅ <br><br>
+          <strong>STA 112 (Probability)</strong> will be held today at <strong>4 PM</strong>. <br>
+          <strong>Venue:</strong> LTB. <br><br>
+          Thank you.
+        </p>
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
+      </div>
+      
+      <div class="course">
+        <h3>‼️‼️‼️ ATTENTION BIO108 STUDENTS ‼️‼️‼️</h3>
+        <p>
+          This is an important notice to <strong>ALL students enrolled in BIO108</strong>:<br><br>
+
+          📢 <strong>The new deadline to register for the practical is Thursday morning.</strong><br><br>
+
+          ⏳ After this deadline, any student who has not registered will <strong>automatically carry the course</strong>.<br><br>
+
+          Please take this seriously and complete your registration as soon as possible!<br><br>
+
+          🤝🤝
+        </p>
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
+      </div>
+      
+      <div class="course">
+        <h3>📢 ESI 102 & 202 Class Notice</h3>
+        <p>
+          This is to notify all that the <strong>ESI 102 & 202 classes will not be held tomorrow</strong>.<br><br>
+
+          The classes will now be held next week on <strong>Wednesday, May 28th, 2025</strong>.<br><br>
+
+          Kindly take note and inform others.
+        </p>
+        <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
+      </div>
     </div>
 
-    <!-- STA 112 Class News -->
-    <div class="course">
-      <h3> STA 112 (Probability) Class Update</h3>
-      <p>
-        Good afternoon, guys. <br><br>
-        To whom it may concern, ✅✅✅ <br><br>
-        <strong>STA 112 (Probability)</strong> will be held today at <strong>4 PM</strong>. <br>
-        <strong>Venue:</strong> LTB. <br><br>
-        Thank you.
-      </p>
-      <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-    </div>
-    
-<div class="course">
-  <h3>‼️‼️‼️ ATTENTION BIO108 STUDENTS ‼️‼️‼️</h3>
-  <p>
-    This is an important notice to <strong>ALL students enrolled in BIO108</strong>:<br><br>
-
-    📢 <strong>The new deadline to register for the practical is Thursday morning.</strong><br><br>
-
-    ⏳ After this deadline, any student who has not registered will <strong>automatically carry the course</strong>.<br><br>
-
-    Please take this seriously and complete your registration as soon as possible!<br><br>
-
-    🤝🤝
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-    
-    <div class="course">
-  <h3>📢 ESI 102 & 202 Class Notice</h3>
-  <p>
-    This is to notify all that the <strong>ESI 102 & 202 classes will not be held tomorrow</strong>.<br><br>
-
-    The classes will now be held next week on <strong>Wednesday, May 28th, 2025</strong>.<br><br>
-
-    Kindly take note and inform others.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-    
-    <div class="course">
-  <h3>MTH 102 Class Update</h3>
-  <p>
-    This is to inform all concerned students that <strong>MTH 102</strong> class will be held today.<br><br>
-    The class is scheduled to take place in the <strong>1K Seater</strong> and <strong>Engineering Hall</strong> venues.<br><br>
-    Please be punctual and come prepared.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-    
-  <div class="course">
-  <h3>✅ CHM 108 Practical Confirmation</h3>
-  <p>
-    Confirmed! The <strong>CHM 108 practical</strong> is still holding as scheduled.<br><br>
-    Kindly be prepared and inform your classmates.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-    
-    <div class="course">
-  <h3>📍 Class Venue Update</h3>
-  <p>
-    Class is being held in the <strong>1K-seater hall</strong>. <br><br>
-    Please find your way to the <strong>1K or Engineering Hall</strong> as soon as possible.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-
-    <div class="course">
-  <h3>❌ PHY 108 Class Cancelled</h3>
-  <p>
-    There will be <strong>no PHY 108 class</strong> today, <strong>20/05/2025</strong>. <br><br>
-    The class has been postponed until <strong>Wednesday, 21/05/2025</strong>. Please take note.
-  </p>
-  <p style="text-align:center; font-size:14px; color:gray;">Posted on June 28, 2025</p>
-</div>
-</div>
-
-    <div id="courses" class="section courses-section">
+      <div id="courses" class="section courses-section">
       <h2>📘 100-Level Courses</h2>
       <!-- MTH 102 – Mathematics -->
       <div class="course">
@@ -375,7 +316,8 @@
       </div>
     </div>
 
- <div id="calendar" class="section">
+
+    <div id="calendar" class="section">
   <h2>📆 Academic Calendar</h2>
   <a 
     href="https://drive.google.com/uc?export=download&id=1c1t8tObbiGOGjMQp4aMfVOXQ5rUBXQJ4" 
@@ -394,32 +336,38 @@
     📥 Download Calendar (PDF)
   </a>
 </div>
-    
+
     <!-- Feedback Section -->
     <div id="feedback" class="section">
-      <h2>💬 Feedback</h2>
+      <h2>💬 Student Feedback</h2>
       <form class="feedback-form" action="https://formsubmit.co/stephenabiola2007@gmail.com" method="POST">
         <input type="text" name="name" placeholder="Your Full Name" required />
         <input type="email" name="email" placeholder="Your Email Address" required />
-        <textarea name="message" rows="5" placeholder="Type your message..." required></textarea>
-        <button type="submit">📤 Submit Feedback</button>
+        <textarea name="message" rows="5" placeholder="Your feedback..." required></textarea>
+        <button type="submit">📤 Submit</button>
+
+        <!-- Hidden Settings -->
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Thanks for your feedback, we’ve received your message and will respond shortly.">
+        <input type="hidden" name="_next" value="https://campusmates12.github.io/CAMPUS-MATES-/thank-you.html">
       </form>
     </div>
 
-    <!-- About Section -->
     <div id="about" class="section">
       <h2>ℹ️ About CampusMate</h2>
-      <p>CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, and resources.</p>
+      <div class="about-text">
+        CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, calendar info, and more in one place.
+      </div>
     </div>
   </div>
 
-   <script>
+  <script>
     const sidebar = document.getElementById("sidebar");
     const searchInput = document.getElementById("searchInput");
 
     function toggleSidebar() {
       sidebar.classList.toggle("show-sidebar");
+      // Keep dark class consistent with body
       sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
     }
 
@@ -429,6 +377,7 @@
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     }
 
+    // Load theme from localStorage
     if (localStorage.getItem("theme") === "dark") {
       document.body.classList.add("dark");
       sidebar.classList.add("dark");
@@ -436,8 +385,12 @@
 
     function showSection(id) {
       document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+      const section = document.getElementById(id);
+      if (section) {
+        section.classList.add("active");
+      }
       sidebar.classList.remove("show-sidebar");
+
       const sectionName = {
         news: "Home",
         courses: "Courses",
@@ -450,9 +403,12 @@
 
     function toggle(id) {
       const el = document.getElementById(id);
-      el.style.display = el.style.display === "flex" ? "none" : "flex";
+      if (el) {
+        el.style.display = (el.style.display === "flex") ? "none" : "flex";
+      }
     }
 
+    // Search function to filter course blocks
     searchInput.addEventListener("input", function () {
       const value = this.value.toLowerCase();
       document.querySelectorAll(".course").forEach(course => {
