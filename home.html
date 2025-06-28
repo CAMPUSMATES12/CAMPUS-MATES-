@@ -135,19 +135,34 @@
       background: #2a2a2a; color: #ccc;
     }
 
-    #notifyBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #002F6C;
-  color: white;
-  border: none;
-  font-size: 28px;
-  padding: 15px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  cursor: pointer;
-  z-index: 9999;
+.hidden {
+  display: none;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.dropdown-content a {
+  background-color: #ecf0ff;
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #002F6C;
+}
+
+.dark .dropdown-content a {
+  background-color: #2d3b55;
+  color: #90c3ff;
 }
   </style>
 </head>
@@ -174,17 +189,21 @@
   </div>
 </div>
 
-  <button onclick="sendSimpleNotification()" id="notifyBtn" title="Notify Everyone">🔔</button>
-
   <div class="sidebar" id="sidebar">
-    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
-    <a href="#" onclick="showSection('home'); return false;">🏠 Home</a>
-    <a href="#" onclick="showSection('courses'); return false;">📘 Courses</a>
-    <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
-    <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
-    <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
-    <a href="https://portal.uniosun.edu.ng" target="_blank" rel="noopener noreferrer">🎓 School Portal</a>
+  <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
+  <a href="#" onclick="showSection('home'); return false;">🏠 Home</a>
+  <a href="#" onclick="showSection('courses'); return false;">📘 Courses</a>
+  <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
+  <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
+  <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
+
+  <!-- School Portal Dropdown -->
+  <a href="#" onclick="toggleDropdown(event)">🎓 School Portal ▼</a>
+  <div id="portalDropdown" style="display:none; padding-left: 15px;">
+    <a href="https://portal.uniosun.edu.ng" target="_blank" rel="noopener noreferrer">🧾 Main Portal</a>
+    <a href="https://chrdportal.uniosun.edu.ng/portal/" target="_blank" rel="noopener noreferrer">🧪 JUPEB Portal</a>
   </div>
+</div> 
 
   <div class="content">
     <div id="home" class="section active">
@@ -333,7 +352,6 @@
       </div>
     </div>
 
-
     <div id="calendar" class="section">
   <h2>📆 Academic Calendar</h2>
   <a 
@@ -376,62 +394,83 @@
         CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, calendar info, and more in one place.
       </div>
     </div>
-  </div>
 
-  <script>
-    const sidebar = document.getElementById("sidebar");
-    const searchInput = document.getElementById("searchInput");
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const searchInput = document.getElementById("searchInput");
 
-    function toggleSidebar() {
-      sidebar.classList.toggle("show-sidebar");
-      // Keep dark class consistent with body
-      sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+  function toggleSidebar() {
+    sidebar.classList.toggle("show-sidebar");
+    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+    localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+  }
+
+  // Load theme from localStorage on page load
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    sidebar.classList.add("dark");
+  }
+
+  function showSection(id) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    const section = document.getElementById(id);
+    if (section) {
+      section.classList.add("active");
     }
+    sidebar.classList.remove("show-sidebar");
 
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
-      sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
-      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    const sectionName = {
+      news: "Home",
+      courses: "Courses",
+      calendar: "Calendar",
+      feedback: "Feedback",
+      about: "About"
+    };
+    document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+  }
+
+  function toggle(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = (el.style.display === "flex") ? "none" : "flex";
     }
+  }
 
-    // Load theme from localStorage
-    if (localStorage.getItem("theme") === "dark") {
-      document.body.classList.add("dark");
-      sidebar.classList.add("dark");
-    }
-
-    function showSection(id) {
-      document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-      const section = document.getElementById(id);
-      if (section) {
-        section.classList.add("active");
-      }
-      sidebar.classList.remove("show-sidebar");
-
-      const sectionName = {
-        news: "Home",
-        courses: "Courses",
-        calendar: "Calendar",
-        feedback: "Feedback",
-        about: "About"
-      };
-      document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
-    }
-
-    function toggle(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.style.display = (el.style.display === "flex") ? "none" : "flex";
-      }
-    }
-
-    // Search function to filter course blocks
-    searchInput.addEventListener("input", function () {
-      const value = this.value.toLowerCase();
-      document.querySelectorAll(".course").forEach(course => {
-        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
-      });
+  // Search courses
+  searchInput.addEventListener("input", function () {
+    const value = this.value.toLowerCase();
+    document.querySelectorAll(".course").forEach(course => {
+      course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
     });
-  </script>
-</body>
-</html>
+  });
+
+  // Floating Notification Panel Auto-Show
+  window.addEventListener("load", () => {
+    const notifPanel = document.getElementById("notifPanel");
+    if (notifPanel) {
+      notifPanel.style.display = "block";
+    }
+  });
+
+  // Optional: Toggle Portal Dropdown Auto-Close
+  let dropdownTimeout;
+  function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById("portalDropdown");
+
+    const isVisible = dropdown.style.display === "block";
+    dropdown.style.display = isVisible ? "none" : "block";
+
+    clearTimeout(dropdownTimeout);
+    if (!isVisible) {
+      dropdownTimeout = setTimeout(() => {
+        dropdown.style.display = "none";
+      }, 5000); // auto-close after 5 seconds
+    }
+  }
+</script>
