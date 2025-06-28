@@ -134,6 +134,21 @@
     .dark .about-text {
       background: #2a2a2a; color: #ccc;
     }
+
+    #notifyBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #002F6C;
+  color: white;
+  border: none;
+  font-size: 28px;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  z-index: 9999;
+}
   </style>
 </head>
 <body>
@@ -158,6 +173,8 @@
     <button class="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
   </div>
 </div>
+
+  <button onclick="sendSimpleNotification()" id="notifyBtn" title="Notify Everyone">🔔</button>
 
   <div class="sidebar" id="sidebar">
     <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
