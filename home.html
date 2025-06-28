@@ -7,6 +7,15 @@
   <meta name="theme-color" content="#002F6C" />
   <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
 
+<div id="searchBarContainer" style="display:none; padding: 10px 20px;">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search courses..."
+    style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;"
+  />
+</div>
+
   <!-- OneSignal Web Push SDK -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
@@ -397,7 +406,6 @@
 
 <script>
   const sidebar = document.getElementById("sidebar");
-  const searchInput = document.getElementById("searchInput");
 
   function toggleSidebar() {
     sidebar.classList.toggle("show-sidebar");
@@ -441,12 +449,25 @@
     }
   }
 
-  // Search courses
-  searchInput.addEventListener("input", function () {
-    const value = this.value.toLowerCase();
-    document.querySelectorAll(".course").forEach(course => {
-      course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
-    });
+  // Toggle Search Bar Visibility
+  function toggleSearchBar() {
+    const bar = document.getElementById("searchBarContainer");
+    if (bar) {
+      bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+    }
+  }
+
+  // Attach search input filter
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll(".course").forEach(course => {
+          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+        });
+      });
+    }
   });
 
   // Floating Notification Panel Auto-Show
@@ -457,7 +478,7 @@
     }
   });
 
-  // Optional: Toggle Portal Dropdown Auto-Close
+  // Toggle Portal Dropdown with Auto-Close
   let dropdownTimeout;
   function toggleDropdown(event) {
     event.preventDefault();
@@ -470,7 +491,7 @@
     if (!isVisible) {
       dropdownTimeout = setTimeout(() => {
         dropdown.style.display = "none";
-      }, 5000); // auto-close after 5 seconds
+      }, 5000);
     }
   }
 </script>
