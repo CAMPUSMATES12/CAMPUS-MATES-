@@ -202,19 +202,20 @@
     <a href="https://portal.uniosun.edu.ng" target="_blank">🎓 School Portal</a>
   </div>
 
-       <h3>📢 News Title</h3>
+  <div class="content">
+    <div id="home" class="section active">
+      <h2>📢 Campus News</h2>
+      <div class="course">
+        <h3>📢 News Title</h3>
         <img src="https://i.postimg.cc/PfQVSMMS/1ef81f0f-79a8-4c60-98e1-460ac162c00b.jpg" style="max-width:100%; border-radius:10px;" />
         <p style="text-align:center; font-size:14px; color:gray;">Posted on June 27, 2025</p>
-      </div>
-    </div>
       </div>
     </div>
 
     <div id="courses" class="section courses-section">
       <h2>📘 100-Level Courses</h2>
 
-      <!-- MTH 102 – Mathematics -->
-      <div class="course" onclick="toggle('mth102')">
+      <div class="course">
         <h3>MTH 102 – Mathematics</h3>
         <div id="mth102" class="topics">
           <a class="download" href="https://docs.google.com/uc?export=download&id=16dsguaE1YIGC74YtC8IuL7jjNAq28YWF" download>⬇️ Differentiation Notes</a>
@@ -222,8 +223,7 @@
         </div>
       </div>
 
-      <!-- PHY 102 – Physics -->
-      <div class="course" onclick="toggle('phy102')">
+      <div class="course">
         <h3>PHY 102 – Physics</h3>
         <div id="phy102" class="topics">
           <a class="download" href="https://drive.google.com/uc?export=download&id=1V7XFfyI9nxios2UDbtkpFkCc3pLFurmD" download>🔍 Optics Notes</a>
@@ -233,8 +233,7 @@
         </div>
       </div>
 
-      <!-- BIO 102 – Biology -->
-      <div class="course" onclick="toggle('bio102')">
+      <div class="course">
         <h3>BIO 102 – Biology</h3>
         <div id="bio102" class="topics">
           <a class="download" href="https://docs.google.com/uc?export=download&id=1M_TsW3gEgGmC8We3XBP1NM-ZYzpCxu6N" download>🦁 Animal Kingdom</a>
@@ -244,8 +243,7 @@
         </div>
       </div>
 
-      <!-- CHM 102 – Chemistry -->
-      <div class="course" onclick="toggle('chm102')">
+      <div class="course">
         <h3>CHM 102 – Chemistry</h3>
         <div id="chm102" class="topics">
           <a class="download" href="https://drive.google.com/uc?export=download&id=1U5A6JsNpz3NwoWL7C3MlvDDXN_lv26Q7" download>🧪 Chemistry Slides</a>
@@ -280,7 +278,6 @@
 
   <script>
     let sidebarOpen = false;
-
     function toggleSidebar() {
       sidebarOpen = !sidebarOpen;
       document.getElementById("sidebar").classList.toggle("show", sidebarOpen);
