@@ -159,21 +159,15 @@
   color: #90c3ff;
 }
 
-.quiz-category {
-  margin-bottom: 30px;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
+.quiz-box label {
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+.quiz-box input[type="radio"] {
+  margin-right: 5px;
 }
 
-.quiz-category h3 {
-  color: #2d87f0;
-  margin-top: 0;
-}
-
-.question {
-  margin-top: 10px;
-}
   </style>
 </head>
 <body>
@@ -219,177 +213,21 @@
 
 <div id="quiz" class="section" style="display: none;">
   <h2>📘 Quiz Section</h2>
-  <p>Select a course below to begin the quiz:</p>
+  <p>Select the correct answer. Use <strong>Next</strong> and <strong>Previous</strong> to navigate.</p>
 
-  <!-- MCB 102 -->
-  <div class="quiz-category">
-    <h3>MCB 102 – Cell Biology</h3>
-    <div class="question">
-      <p>1. What is the powerhouse of the cell?</p>
-      <label><input type="radio" name="mcb102q1"> Mitochondrion</label><br>
-      <label><input type="radio" name="mcb102q1"> Ribosome</label><br>
-      <label><input type="radio" name="mcb102q1"> Lysosome</label><br>
-      <label><input type="radio" name="mcb102q1"> Golgi body</label>
-    </div>
-    <div class="question">
-      <p>2. What organelle contains genetic material?</p>
-      <label><input type="radio" name="mcb102q2"> Nucleus</label><br>
-      <label><input type="radio" name="mcb102q2"> Cytoplasm</label><br>
-      <label><input type="radio" name="mcb102q2"> Endoplasmic Reticulum</label><br>
-      <label><input type="radio" name="mcb102q2"> Cell wall</label>
-    </div>
-    <div class="question">
-      <p>3. Ribosomes are the site for:</p>
-      <label><input type="radio" name="mcb102q3"> DNA replication</label><br>
-      <label><input type="radio" name="mcb102q3"> Protein synthesis</label><br>
-      <label><input type="radio" name="mcb102q3"> Lipid storage</label><br>
-      <label><input type="radio" name="mcb102q3"> Cell division</label>
-    </div>
+  <!-- Container for current question -->
+  <div id="quiz-container" class="quiz-box" style="margin: 20px 0;"></div>
+
+  <!-- Quiz navigation buttons -->
+  <div class="quiz-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <button onclick="prevQuestion()" style="padding: 10px 20px;">⬅️ Previous</button>
+    <button onclick="nextQuestion()" style="padding: 10px 20px;">➡️ Next</button>
+    <button onclick="submitQuiz()" style="padding: 12px 24px; background-color: #4CAF50; color: white; border: none; font-weight: bold; border-radius: 5px;">✅ Submit</button>
   </div>
 
-  <!-- MCB 104 -->
-  <div class="quiz-category">
-    <h3>MCB 104 – Microbiology Lab</h3>
-    <div class="question">
-      <p>4. What instrument is used to view bacteria?</p>
-      <label><input type="radio" name="mcb104q1"> Thermometer</label><br>
-      <label><input type="radio" name="mcb104q1"> Spectrophotometer</label><br>
-      <label><input type="radio" name="mcb104q1"> Microscope</label><br>
-      <label><input type="radio" name="mcb104q1"> Test tube</label>
-    </div>
-    <div class="question">
-      <p>5. Gram-negative bacteria appear:</p>
-      <label><input type="radio" name="mcb104q2"> Blue</label><br>
-      <label><input type="radio" name="mcb104q2"> Green</label><br>
-      <label><input type="radio" name="mcb104q2"> Pink</label><br>
-      <label><input type="radio" name="mcb104q2"> Yellow</label>
-    </div>
-    <div class="question">
-      <p>6. Which medium is used for bacterial culture?</p>
-      <label><input type="radio" name="mcb104q3"> Agar</label><br>
-      <label><input type="radio" name="mcb104q3"> Ethanol</label><br>
-      <label><input type="radio" name="mcb104q3"> Sugar</label><br>
-      <label><input type="radio" name="mcb104q3"> Sand</label>
-    </div>
-  </div>
-
-  <!-- MTH 102 -->
-  <div class="quiz-category">
-    <h3>MTH 102 – Calculus</h3>
-    <div class="question">
-      <p>7. The integral of 1/x dx is:</p>
-      <label><input type="radio" name="mth102q1"> x</label><br>
-      <label><input type="radio" name="mth102q1"> ln|x| + C</label><br>
-      <label><input type="radio" name="mth102q1"> x²</label><br>
-      <label><input type="radio" name="mth102q1"> 1/x</label>
-    </div>
-    <div class="question">
-      <p>8. Derivative of cos(x) is:</p>
-      <label><input type="radio" name="mth102q2"> -sin(x)</label><br>
-      <label><input type="radio" name="mth102q2"> sin(x)</label><br>
-      <label><input type="radio" name="mth102q2"> tan(x)</label><br>
-      <label><input type="radio" name="mth102q2"> -cos(x)</label>
-    </div>
-    <div class="question">
-      <p>9. d/dx (x³) = ?</p>
-      <label><input type="radio" name="mth102q3"> 3x²</label><br>
-      <label><input type="radio" name="mth102q3"> x²</label><br>
-      <label><input type="radio" name="mth102q3"> x³</label><br>
-      <label><input type="radio" name="mth102q3"> 2x</label>
-    </div>
-  </div>
-
-  <!-- CHEM 102 -->
-  <div class="quiz-category">
-    <h3>CHEM 102 – General Chemistry</h3>
-    <div class="question">
-      <p>10. Which is a noble gas?</p>
-      <label><input type="radio" name="chem102q1"> Neon</label><br>
-      <label><input type="radio" name="chem102q1"> Nitrogen</label><br>
-      <label><input type="radio" name="chem102q1"> Oxygen</label><br>
-      <label><input type="radio" name="chem102q1"> Chlorine</label>
-    </div>
-    <div class="question">
-      <p>11. Atomic number represents:</p>
-      <label><input type="radio" name="chem102q2"> Number of electrons</label><br>
-      <label><input type="radio" name="chem102q2"> Number of protons</label><br>
-      <label><input type="radio" name="chem102q2"> Number of neutrons</label><br>
-      <label><input type="radio" name="chem102q2"> Mass</label>
-    </div>
-    <div class="question">
-      <p>12. pH scale measures:</p>
-      <label><input type="radio" name="chem102q3"> Temperature</label><br>
-      <label><input type="radio" name="chem102q3"> Light intensity</label><br>
-      <label><input type="radio" name="chem102q3"> Acidity/Alkalinity</label><br>
-      <label><input type="radio" name="chem102q3"> Volume</label>
-    </div>
-  </div>
-
-  <!-- BIO 102 -->
-  <div class="quiz-category">
-    <h3>BIO 102 – Binomial Nomenclature 
-      <label><input type="radio" name="bio102q1"> Kingdom and phylum</label><br>
-      <label><input type="radio" name="bio102q1"> Family and class</label><br>
-      <label><input type="radio" name="bio102q1"> Order and domain</label>
-    </div>
-    <div class="question">
-      <p>14. The scientific name of human is:</p>
-      <label><input type="radio" name="bio102q2"> Homo sapiens</label><br>
-      <label><input type="radio" name="bio102q2"> Homo erectus</label><br>
-      <label><input type="radio" name="bio102q2"> sapiens Homo</label><br>
-      <label><input type="radio" name="bio102q2"> sapiens sapiens</label>
-    </div>
-    <div class="question">
-      <p>15. In binomial nomenclature, the genus is written:</p>
-      <label><input type="radio" name="bio102q3"> In lowercase</label><br>
-      <label><input type="radio" name="bio102q3"> In bold</label><br>
-      <label><input type="radio" name="bio102q3"> First and capitalized</label><br>
-      <label><input type="radio" name="bio102q3"> Second and underlined</label>
-    </div>
-  </div>
-
-  <!-- PHY 102 -->
-  <div class="quiz-category">
-    <h3>PHY 102 – Electricity & Magnetism</h3>
-    <div class="question">
-      <p>16. Unit of electric current is:</p>
-      <label><input type="radio" name="phy102q1"> Watt</label><br>
-      <label><input type="radio" name="phy102q1"> Ampere</label><br>
-      <label><input type="radio" name="phy102q1"> Volt</label><br>
-      <label><input type="radio" name="phy102q1"> Ohm</label>
-    </div>
-    <div class="question">
-      <p>17. Ohm’s law is V = ?</p>
-      <label><input type="radio" name="phy102q2"> IR</label><br>
-      <label><input type="radio" name="phy102q2"> I + R</label><br>
-      <label><input type="radio" name="phy102q2"> I / R</label><br>
-      <label><input type="radio" name="phy102q2"> R / I</label>
-    </div>
-    <div class="question">
-      <p>18. Magnetic field is produced by:</p>
-      <label><input type="radio" name="phy102q3"> Static charge</label><br>
-      <label><input type="radio" name="phy102q3"> Moving charge</label><br>
-      <label><input type="radio" name="phy102q3"> Neutrons</label><br>
-      <label><input type="radio" name="phy102q3"> Stationary electrons</label>
-    </div>
-    <div class="question">
-      <p>19. The SI unit of resistance is:</p>
-      <label><input type="radio" name="phy102q4"> Volt</label><br>
-      <label><input type="radio" name="phy102q4"> Coulomb</label><br>
-      <label><input type="radio" name="phy102q4"> Ohm</label><br>
-      <label><input type="radio" name="phy102q4"> Ampere</label>
-    </div>
-    <div class="question">
-      <p>20. Transformer works on the principle of:</p>
-      <label><input type="radio" name="phy102q5"> Static electricity</label><br>
-      <label><input type="radio" name="phy102q5"> Electromagnetic induction</label><br>
-      <label><input type="radio" name="phy102q5"> Thermionic emission</label><br>
-      <label><input type="radio" name="phy102q5"> Capacitance</label>
-    </div>
-  </div>
-
-  <br />
-  <button onclick="alert('📝 Submission feature coming soon!')">Submit</button>
+  <!-- Optional result or feedback -->
+  <div id="quiz-result" style="margin-top: 20px; font-weight: bold;"></div>
+</div>
 </div>
     
   <div class="content">
@@ -637,6 +475,11 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
 
+  <!-- Firebase Messaging (type="module") -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
     authDomain: "campusmate-51287.firebaseapp.com",
@@ -677,6 +520,7 @@
   });
 </script>
 
+<!-- Main UI + Quiz Script -->
 <script>
   const sidebar = document.getElementById("sidebar");
 
@@ -710,7 +554,7 @@
       calendar: "Calendar",
       feedback: "Feedback",
       about: "About",
-      quiz: "Quiz" // ✅ added quiz section title
+      quiz: "Quiz"
     };
     document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
   }
@@ -773,4 +617,126 @@
       }, 5000);
     }
   }
+
+  // ✅ Quiz Logic
+  const quizQuestions = [
+    { question: "1. What is the powerhouse of the cell?", options: ["Mitochondrion", "Ribosome", "Lysosome", "Golgi body"], answer: "Mitochondrion" },
+    { question: "2. What organelle contains genetic material?", options: ["Nucleus", "Cytoplasm", "Endoplasmic Reticulum", "Cell wall"], answer: "Nucleus" },
+    { question: "3. Ribosomes are the site for:", options: ["DNA replication", "Protein synthesis", "Lipid storage", "Cell division"], answer: "Protein synthesis" },
+    { question: "4. What instrument is used to view bacteria?", options: ["Thermometer", "Spectrophotometer", "Microscope", "Test tube"], answer: "Microscope" },
+    { question: "5. Gram-negative bacteria appear:", options: ["Blue", "Green", "Pink", "Yellow"], answer: "Pink" },
+    { question: "6. Which medium is used for bacterial culture?", options: ["Agar", "Ethanol", "Sugar", "Sand"], answer: "Agar" },
+    { question: "7. The integral of 1/x dx is:", options: ["x", "ln|x| + C", "x²", "1/x"], answer: "ln|x| + C" },
+    { question: "8. Derivative of cos(x) is:", options: ["-sin(x)", "sin(x)", "tan(x)", "-cos(x)"], answer: "-sin(x)" },
+    { question: "9. d/dx (x³) = ?", options: ["3x²", "x²", "x³", "2x"], answer: "3x²" },
+    { question: "10. Which is a noble gas?", options: ["Neon", "Nitrogen", "Oxygen", "Chlorine"], answer: "Neon" },
+    { question: "11. Atomic number represents:", options: ["Electrons", "Protons", "Neutrons", "Mass"], answer: "Protons" },
+    { question: "12. pH scale measures:", options: ["Temperature", "Light", "Acidity/Alkalinity", "Volume"], answer: "Acidity/Alkalinity" },
+    { question: "13. Binomial nomenclature includes:", options: ["Kingdom and phylum", "Family and class", "Order and domain", "Genus and species"], answer: "Genus and species" },
+    { question: "14. The scientific name of human is:", options: ["Homo sapiens", "Homo erectus", "sapiens Homo", "sapiens sapiens"], answer: "Homo sapiens" },
+    { question: "15. Genus in binomial name is written:", options: ["Lowercase", "Bold", "First and capitalized", "Second and underlined"], answer: "First and capitalized" },
+    { question: "16. Unit of electric current is:", options: ["Watt", "Ampere", "Volt", "Ohm"], answer: "Ampere" },
+    { question: "17. Ohm’s law is V = ?", options: ["IR", "I + R", "I / R", "R / I"], answer: "IR" },
+    { question: "18. Magnetic field is produced by:", options: ["Static charge", "Moving charge", "Neutrons", "Stationary electrons"], answer: "Moving charge" },
+    { question: "19. SI unit of resistance is:", options: ["Volt", "Coulomb", "Ohm", "Ampere"], answer: "Ohm" },
+    { question: "20. Transformer works by:", options: ["Static electricity", "Electromagnetic induction", "Thermionic emission", "Capacitance"], answer: "Electromagnetic induction" }
+  ];
+
+  let currentQuestion = 0;
+
+  function renderQuizQuestion() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = "";
+
+    const q = quizQuestions[currentQuestion];
+    const questionEl = document.createElement("div");
+    questionEl.classList.add("question");
+
+    const questionText = document.createElement("p");
+    questionText.textContent = q.question;
+    questionEl.appendChild(questionText);
+
+    q.options.forEach(opt => {
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "quiz";
+      input.value = opt;
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(" " + opt));
+      questionEl.appendChild(label);
+      questionEl.appendChild(document.createElement("br"));
+    });
+
+    quizContainer.appendChild(questionEl);
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < quizQuestions.length - 1) {
+      currentQuestion++;
+      renderQuizQuestion();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      renderQuizQuestion();
+    }
+  }
+
+  function submitQuiz() {
+    const answers = document.querySelectorAll("input[name='quiz']:checked");
+    const selectedAnswer = answers[answers.length - 1]?.value;
+    const correct = quizQuestions[currentQuestion].answer;
+    let score = 0;
+
+    if (selectedAnswer === correct) score++;
+
+    alert(`✅ You scored ${score} out of 1 for this question!`);
+  }
+
+  // Automatically load first question when section is visible
+  document.addEventListener("DOMContentLoaded", () => {
+    const quizSection = document.getElementById("quiz");
+    if (quizSection) renderQuizQuestion();
+  });
+</script>const firebaseConfig = {
+    apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+    authDomain: "campusmate-51287.firebaseapp.com",
+    projectId: "campusmate-51287",
+    storageBucket: "campusmate-51287.firebasestorage.app",
+    messagingSenderId: "902488706597",
+    appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+    measurementId: "G-RBL06KGEGY"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then((reg) => {
+        console.log('✅ Service worker registered:', reg.scope);
+      })
+      .catch(err => console.error("❌ SW registration failed:", err));
+  }
+
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      getToken(messaging, {
+        vapidKey: "BA89wWoaUNVa5p_6jnOtwQ99EHHuNV59M9FEC2jIPuKK-Jw2ID2YAlyHsBWnHV4gnXNi1Alvkm4SZJ6bvXFZqzk"
+      }).then((token) => {
+        console.log("✅ FCM Token:", token);
+      }).catch((err) => {
+        console.error("❌ Error getting token:", err);
+      });
+    } else {
+      console.warn("🔕 Notification permission not granted.");
+    }
+  });
+
+  onMessage(messaging, (payload) => {
+    alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
+  });
 </script>
