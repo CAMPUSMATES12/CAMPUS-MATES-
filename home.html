@@ -158,6 +158,22 @@
   background-color: #2d3b55;
   color: #90c3ff;
 }
+
+.quiz-category {
+  margin-bottom: 30px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.quiz-category h3 {
+  color: #2d87f0;
+  margin-top: 0;
+}
+
+.question {
+  margin-top: 10px;
+}
   </style>
 </head>
 <body>
@@ -190,7 +206,8 @@
   <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
   <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
   <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
-
+  <a href="#" onclick="showSection('quiz')"> return false;>📘 Quiz</a>
+  
   <!-- School Portal Dropdown -->
   <a href="#" onclick="toggleDropdown(event)">🎓 School Portal ▼</a>
   <div id="portalDropdown" style="display:none; padding-left: 15px;">
@@ -199,6 +216,181 @@
   </div>
 </div> 
 
+<div id="quiz" class="section" style="display: none;">
+  <h2>📘 Quiz Section</h2>
+  <p>Select a course below to begin the quiz:</p>
+
+  <!-- MCB 102 -->
+  <div class="quiz-category">
+    <h3>MCB 102 – Cell Biology</h3>
+    <div class="question">
+      <p>1. What is the powerhouse of the cell?</p>
+      <label><input type="radio" name="mcb102q1"> Mitochondrion</label><br>
+      <label><input type="radio" name="mcb102q1"> Ribosome</label><br>
+      <label><input type="radio" name="mcb102q1"> Lysosome</label><br>
+      <label><input type="radio" name="mcb102q1"> Golgi body</label>
+    </div>
+    <div class="question">
+      <p>2. What organelle contains genetic material?</p>
+      <label><input type="radio" name="mcb102q2"> Nucleus</label><br>
+      <label><input type="radio" name="mcb102q2"> Cytoplasm</label><br>
+      <label><input type="radio" name="mcb102q2"> Endoplasmic Reticulum</label><br>
+      <label><input type="radio" name="mcb102q2"> Cell wall</label>
+    </div>
+    <div class="question">
+      <p>3. Ribosomes are the site for:</p>
+      <label><input type="radio" name="mcb102q3"> DNA replication</label><br>
+      <label><input type="radio" name="mcb102q3"> Protein synthesis</label><br>
+      <label><input type="radio" name="mcb102q3"> Lipid storage</label><br>
+      <label><input type="radio" name="mcb102q3"> Cell division</label>
+    </div>
+  </div>
+
+  <!-- MCB 104 -->
+  <div class="quiz-category">
+    <h3>MCB 104 – Microbiology Lab</h3>
+    <div class="question">
+      <p>4. What instrument is used to view bacteria?</p>
+      <label><input type="radio" name="mcb104q1"> Thermometer</label><br>
+      <label><input type="radio" name="mcb104q1"> Spectrophotometer</label><br>
+      <label><input type="radio" name="mcb104q1"> Microscope</label><br>
+      <label><input type="radio" name="mcb104q1"> Test tube</label>
+    </div>
+    <div class="question">
+      <p>5. Gram-negative bacteria appear:</p>
+      <label><input type="radio" name="mcb104q2"> Blue</label><br>
+      <label><input type="radio" name="mcb104q2"> Green</label><br>
+      <label><input type="radio" name="mcb104q2"> Pink</label><br>
+      <label><input type="radio" name="mcb104q2"> Yellow</label>
+    </div>
+    <div class="question">
+      <p>6. Which medium is used for bacterial culture?</p>
+      <label><input type="radio" name="mcb104q3"> Agar</label><br>
+      <label><input type="radio" name="mcb104q3"> Ethanol</label><br>
+      <label><input type="radio" name="mcb104q3"> Sugar</label><br>
+      <label><input type="radio" name="mcb104q3"> Sand</label>
+    </div>
+  </div>
+
+  <!-- MTH 102 -->
+  <div class="quiz-category">
+    <h3>MTH 102 – Calculus</h3>
+    <div class="question">
+      <p>7. The integral of 1/x dx is:</p>
+      <label><input type="radio" name="mth102q1"> x</label><br>
+      <label><input type="radio" name="mth102q1"> ln|x| + C</label><br>
+      <label><input type="radio" name="mth102q1"> x²</label><br>
+      <label><input type="radio" name="mth102q1"> 1/x</label>
+    </div>
+    <div class="question">
+      <p>8. Derivative of cos(x) is:</p>
+      <label><input type="radio" name="mth102q2"> -sin(x)</label><br>
+      <label><input type="radio" name="mth102q2"> sin(x)</label><br>
+      <label><input type="radio" name="mth102q2"> tan(x)</label><br>
+      <label><input type="radio" name="mth102q2"> -cos(x)</label>
+    </div>
+    <div class="question">
+      <p>9. d/dx (x³) = ?</p>
+      <label><input type="radio" name="mth102q3"> 3x²</label><br>
+      <label><input type="radio" name="mth102q3"> x²</label><br>
+      <label><input type="radio" name="mth102q3"> x³</label><br>
+      <label><input type="radio" name="mth102q3"> 2x</label>
+    </div>
+  </div>
+
+  <!-- CHEM 102 -->
+  <div class="quiz-category">
+    <h3>CHEM 102 – General Chemistry</h3>
+    <div class="question">
+      <p>10. Which is a noble gas?</p>
+      <label><input type="radio" name="chem102q1"> Neon</label><br>
+      <label><input type="radio" name="chem102q1"> Nitrogen</label><br>
+      <label><input type="radio" name="chem102q1"> Oxygen</label><br>
+      <label><input type="radio" name="chem102q1"> Chlorine</label>
+    </div>
+    <div class="question">
+      <p>11. Atomic number represents:</p>
+      <label><input type="radio" name="chem102q2"> Number of electrons</label><br>
+      <label><input type="radio" name="chem102q2"> Number of protons</label><br>
+      <label><input type="radio" name="chem102q2"> Number of neutrons</label><br>
+      <label><input type="radio" name="chem102q2"> Mass</label>
+    </div>
+    <div class="question">
+      <p>12. pH scale measures:</p>
+      <label><input type="radio" name="chem102q3"> Temperature</label><br>
+      <label><input type="radio" name="chem102q3"> Light intensity</label><br>
+      <label><input type="radio" name="chem102q3"> Acidity/Alkalinity</label><br>
+      <label><input type="radio" name="chem102q3"> Volume</label>
+    </div>
+  </div>
+
+  <!-- BIO 102 -->
+  <div class="quiz-category">
+    <h3>BIO 102 – Binomial Nomenclature 
+      <label><input type="radio" name="bio102q1"> Kingdom and phylum</label><br>
+      <label><input type="radio" name="bio102q1"> Family and class</label><br>
+      <label><input type="radio" name="bio102q1"> Order and domain</label>
+    </div>
+    <div class="question">
+      <p>14. The scientific name of human is:</p>
+      <label><input type="radio" name="bio102q2"> Homo sapiens</label><br>
+      <label><input type="radio" name="bio102q2"> Homo erectus</label><br>
+      <label><input type="radio" name="bio102q2"> sapiens Homo</label><br>
+      <label><input type="radio" name="bio102q2"> sapiens sapiens</label>
+    </div>
+    <div class="question">
+      <p>15. In binomial nomenclature, the genus is written:</p>
+      <label><input type="radio" name="bio102q3"> In lowercase</label><br>
+      <label><input type="radio" name="bio102q3"> In bold</label><br>
+      <label><input type="radio" name="bio102q3"> First and capitalized</label><br>
+      <label><input type="radio" name="bio102q3"> Second and underlined</label>
+    </div>
+  </div>
+
+  <!-- PHY 102 -->
+  <div class="quiz-category">
+    <h3>PHY 102 – Electricity & Magnetism</h3>
+    <div class="question">
+      <p>16. Unit of electric current is:</p>
+      <label><input type="radio" name="phy102q1"> Watt</label><br>
+      <label><input type="radio" name="phy102q1"> Ampere</label><br>
+      <label><input type="radio" name="phy102q1"> Volt</label><br>
+      <label><input type="radio" name="phy102q1"> Ohm</label>
+    </div>
+    <div class="question">
+      <p>17. Ohm’s law is V = ?</p>
+      <label><input type="radio" name="phy102q2"> IR</label><br>
+      <label><input type="radio" name="phy102q2"> I + R</label><br>
+      <label><input type="radio" name="phy102q2"> I / R</label><br>
+      <label><input type="radio" name="phy102q2"> R / I</label>
+    </div>
+    <div class="question">
+      <p>18. Magnetic field is produced by:</p>
+      <label><input type="radio" name="phy102q3"> Static charge</label><br>
+      <label><input type="radio" name="phy102q3"> Moving charge</label><br>
+      <label><input type="radio" name="phy102q3"> Neutrons</label><br>
+      <label><input type="radio" name="phy102q3"> Stationary electrons</label>
+    </div>
+    <div class="question">
+      <p>19. The SI unit of resistance is:</p>
+      <label><input type="radio" name="phy102q4"> Volt</label><br>
+      <label><input type="radio" name="phy102q4"> Coulomb</label><br>
+      <label><input type="radio" name="phy102q4"> Ohm</label><br>
+      <label><input type="radio" name="phy102q4"> Ampere</label>
+    </div>
+    <div class="question">
+      <p>20. Transformer works on the principle of:</p>
+      <label><input type="radio" name="phy102q5"> Static electricity</label><br>
+      <label><input type="radio" name="phy102q5"> Electromagnetic induction</label><br>
+      <label><input type="radio" name="phy102q5"> Thermionic emission</label><br>
+      <label><input type="radio" name="phy102q5"> Capacitance</label>
+    </div>
+  </div>
+
+  <br />
+  <button onclick="alert('📝 Submission feature coming soon!')">Submit</button>
+</div>
+    
   <div class="content">
     <div id="home" class="section active">
       <h2>Campus News</h2>
@@ -457,7 +649,6 @@
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
-  // Register Service Worker for background notifications
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/firebase-messaging-sw.js')
       .then((reg) => {
@@ -466,7 +657,6 @@
       .catch(err => console.error("❌ SW registration failed:", err));
   }
 
-  // Request permission and get token
   Notification.requestPermission().then(permission => {
     if (permission === "granted") {
       getToken(messaging, {
@@ -481,7 +671,6 @@
     }
   });
 
-  // Handle messages while app is open
   onMessage(messaging, (payload) => {
     alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
   });
@@ -501,7 +690,6 @@
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
   }
 
-  // Load theme from localStorage on page load
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
     sidebar.classList.add("dark");
@@ -520,7 +708,8 @@
       courses: "Courses",
       calendar: "Calendar",
       feedback: "Feedback",
-      about: "About"
+      about: "About",
+      quiz: "Quiz" // ✅ added quiz section title
     };
     document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
   }
@@ -555,11 +744,7 @@
       title.addEventListener('click', () => {
         const topicsDiv = title.nextElementSibling;
         if (topicsDiv) {
-          if (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') {
-            topicsDiv.style.display = 'flex';
-          } else {
-            topicsDiv.style.display = 'none';
-          }
+          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
         }
       });
     });
