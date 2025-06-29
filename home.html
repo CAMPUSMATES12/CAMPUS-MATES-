@@ -698,7 +698,8 @@
 
   // Automatically load first question when section is visible
   document.addEventListener("DOMContentLoaded", () => {
-    const quizSection = document.getElementById("quiz");
-    if (quizSection) renderQuizQuestion();
-  });
+  if (document.getElementById("quiz")) {
+    renderQuizQuestion(); // 🔥 This shows the first question
+  }
+});
 </script>
