@@ -446,6 +446,7 @@
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
+  // Register Service Worker for background notifications
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/firebase-messaging-sw.js')
       .then((reg) => {
@@ -454,6 +455,7 @@
       .catch(err => console.error("❌ SW registration failed:", err));
   }
 
+  // Request permission and get token
   Notification.requestPermission().then(permission => {
     if (permission === "granted") {
       getToken(messaging, {
@@ -468,6 +470,7 @@
     }
   });
 
+  // Handle messages while app is open
   onMessage(messaging, (payload) => {
     alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
   });
@@ -487,6 +490,7 @@
     localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
   }
 
+  // Load theme from localStorage on page load
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
     sidebar.classList.add("dark");
@@ -525,7 +529,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Live Search
     const searchInput = document.getElementById("searchInput");
     if (searchInput) {
       searchInput.addEventListener("input", function () {
@@ -536,43 +539,18 @@
       });
     }
 
-    // Toggle course title
     document.querySelectorAll('.course h3').forEach(title => {
       title.style.cursor = 'pointer';
       title.addEventListener('click', () => {
         const topicsDiv = title.nextElementSibling;
         if (topicsDiv) {
-          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
+          if (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') {
+            topicsDiv.style.display = 'flex';
+          } else {
+            topicsDiv.style.display = 'none';
+          }
         }
       });
-    });
-
-    // Read More / Show Less Logic
-    const maxHeight = 300;
-    document.querySelectorAll(".course").forEach(course => {
-      if (course.scrollHeight > maxHeight) {
-        course.style.maxHeight = maxHeight + "px";
-        course.style.overflow = "hidden";
-
-        const toggleBtn = document.createElement("button");
-        toggleBtn.innerText = "📂 Read More";
-        toggleBtn.style.display = "block";
-        toggleBtn.style.margin = "10px auto";
-        toggleBtn.style.background = "#2d87f0";
-        toggleBtn.style.color = "#fff";
-        toggleBtn.style.border = "none";
-        toggleBtn.style.padding = "8px 16px";
-        toggleBtn.style.borderRadius = "6px";
-        toggleBtn.style.cursor = "pointer";
-
-        toggleBtn.addEventListener("click", () => {
-          const isExpanded = course.style.maxHeight === "none";
-          course.style.maxHeight = isExpanded ? maxHeight + "px" : "none";
-          toggleBtn.innerText = isExpanded ? "📂 Read More" : "🔒 Show Less";
-        });
-
-        course.appendChild(toggleBtn);
-      }
     });
   });
 
