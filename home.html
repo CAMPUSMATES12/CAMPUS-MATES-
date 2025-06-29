@@ -701,42 +701,4 @@
     const quizSection = document.getElementById("quiz");
     if (quizSection) renderQuizQuestion();
   });
-</script>const firebaseConfig = {
-    apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
-    authDomain: "campusmate-51287.firebaseapp.com",
-    projectId: "campusmate-51287",
-    storageBucket: "campusmate-51287.firebasestorage.app",
-    messagingSenderId: "902488706597",
-    appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
-    measurementId: "G-RBL06KGEGY"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/firebase-messaging-sw.js')
-      .then((reg) => {
-        console.log('✅ Service worker registered:', reg.scope);
-      })
-      .catch(err => console.error("❌ SW registration failed:", err));
-  }
-
-  Notification.requestPermission().then(permission => {
-    if (permission === "granted") {
-      getToken(messaging, {
-        vapidKey: "BA89wWoaUNVa5p_6jnOtwQ99EHHuNV59M9FEC2jIPuKK-Jw2ID2YAlyHsBWnHV4gnXNi1Alvkm4SZJ6bvXFZqzk"
-      }).then((token) => {
-        console.log("✅ FCM Token:", token);
-      }).catch((err) => {
-        console.error("❌ Error getting token:", err);
-      });
-    } else {
-      console.warn("🔕 Notification permission not granted.");
-    }
-  });
-
-  onMessage(messaging, (payload) => {
-    alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
-  });
 </script>
