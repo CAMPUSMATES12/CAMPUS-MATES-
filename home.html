@@ -16,29 +16,6 @@
   />
 </div>
 
-
-  importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js");
-
-firebase.initializeApp({
-  apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
-  authDomain: "campusmate-51287.firebaseapp.com",
-  projectId: "campusmate-51287",
-  storageBucket: "campusmate-51287.firebasestorage.app",
-  messagingSenderId: "902488706597",
-  appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
-  measurementId: "G-RBL06KGEGY"
-});
-
-const messaging = firebase.messaging();
-
-messaging.onBackgroundMessage(payload => {
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body,
-    icon: '/icon.png' // optional
-  });
-});
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
