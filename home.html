@@ -17,20 +17,27 @@
 </div>
 
 
-  <!-- OneSignal Web Push SDK -->
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-  <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      await OneSignal.init({
-        appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7",
-        notifyButton: {
-          enable: true,
-        },
-        allowLocalhostAsSecureOrigin: true
-      });
-    });
-  </script>
+  importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js");
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+  authDomain: "campusmate-51287.firebaseapp.com",
+  projectId: "campusmate-51287",
+  storageBucket: "campusmate-51287.firebasestorage.app",
+  messagingSenderId: "902488706597",
+  appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+  measurementId: "G-RBL06KGEGY"
+});
+
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(payload => {
+  self.registration.showNotification(payload.notification.title, {
+    body: payload.notification.body,
+    icon: '/icon.png' // optional
+  });
+});
 
   <style>
     body {
@@ -430,110 +437,151 @@
       </div>
     </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+    authDomain: "campusmate-51287.firebaseapp.com",
+    projectId: "campusmate-51287",
+    storageBucket: "campusmate-51287.firebasestorage.app",
+    messagingSenderId: "902488706597",
+    appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+    measurementId: "G-RBL06KGEGY"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  // Register Service Worker for background notifications
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then((reg) => {
+        console.log('✅ Service worker registered:', reg.scope);
+      })
+      .catch(err => console.error("❌ SW registration failed:", err));
+  }
+
+  // Request permission and get token
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      getToken(messaging, {
+        vapidKey: "BA89wWoaUNVa5p_6jnOtwQ99EHHuNV59M9FEC2jIPuKK-Jw2ID2YAlyHsBWnHV4gnXNi1Alvkm4SZJ6bvXFZqzk"
+      }).then((token) => {
+        console.log("✅ FCM Token:", token);
+      }).catch((err) => {
+        console.error("❌ Error getting token:", err);
+      });
+    } else {
+      console.warn("🔕 Notification permission not granted.");
+    }
+  });
+
+  // Handle messages while app is open
+  onMessage(messaging, (payload) => {
+    alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
+  });
+</script>
+
 <script>
   const sidebar = document.getElementById("sidebar");
 
-function toggleSidebar() {
-  sidebar.classList.toggle("show-sidebar");
-  sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
-}
-
-function toggleTheme() {
-  document.body.classList.toggle("dark");
-  sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-}
-
-// Load theme from localStorage on page load
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  sidebar.classList.add("dark");
-}
-
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-  const section = document.getElementById(id);
-  if (section) {
-    section.classList.add("active");
+  function toggleSidebar() {
+    sidebar.classList.toggle("show-sidebar");
+    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
   }
-  sidebar.classList.remove("show-sidebar");
 
-  const sectionName = {
-    news: "Home",
-    courses: "Courses",
-    calendar: "Calendar",
-    feedback: "Feedback",
-    about: "About"
-  };
-  document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
-}
-
-function toggle(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.style.display = (el.style.display === "flex") ? "none" : "flex";
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+    localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
   }
-}
 
-// Toggle Search Bar Visibility
-function toggleSearchBar() {
-  const bar = document.getElementById("searchBarContainer");
-  if (bar) {
-    bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+  // Load theme from localStorage on page load
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    sidebar.classList.add("dark");
   }
-}
 
-// Attach event listeners after DOM loaded
-document.addEventListener("DOMContentLoaded", function () {
-  // Search input filter
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", function () {
-      const value = this.value.toLowerCase();
-      document.querySelectorAll(".course").forEach(course => {
-        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+  function showSection(id) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    const section = document.getElementById(id);
+    if (section) {
+      section.classList.add("active");
+    }
+    sidebar.classList.remove("show-sidebar");
+
+    const sectionName = {
+      news: "Home",
+      courses: "Courses",
+      calendar: "Calendar",
+      feedback: "Feedback",
+      about: "About"
+    };
+    document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+  }
+
+  function toggle(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = (el.style.display === "flex") ? "none" : "flex";
+    }
+  }
+
+  function toggleSearchBar() {
+    const bar = document.getElementById("searchBarContainer");
+    if (bar) {
+      bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll(".course").forEach(course => {
+          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+        });
+      });
+    }
+
+    document.querySelectorAll('.course h3').forEach(title => {
+      title.style.cursor = 'pointer';
+      title.addEventListener('click', () => {
+        const topicsDiv = title.nextElementSibling;
+        if (topicsDiv) {
+          if (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') {
+            topicsDiv.style.display = 'flex';
+          } else {
+            topicsDiv.style.display = 'none';
+          }
+        }
       });
     });
-  }
-
-  // Toggle topics visibility on course title click
-  document.querySelectorAll('.course h3').forEach(title => {
-    title.style.cursor = 'pointer';
-    title.addEventListener('click', () => {
-      const topicsDiv = title.nextElementSibling;
-      if (topicsDiv) {
-        if (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') {
-          topicsDiv.style.display = 'flex'; // or 'block' depending on your CSS
-        } else {
-          topicsDiv.style.display = 'none';
-        }
-      }
-    });
   });
-});
 
-// Floating Notification Panel Auto-Show
-window.addEventListener("load", () => {
-  const notifPanel = document.getElementById("notifPanel");
-  if (notifPanel) {
-    notifPanel.style.display = "block";
+  window.addEventListener("load", () => {
+    const notifPanel = document.getElementById("notifPanel");
+    if (notifPanel) {
+      notifPanel.style.display = "block";
+    }
+  });
+
+  let dropdownTimeout;
+  function toggleDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById("portalDropdown");
+
+    const isVisible = dropdown.style.display === "block";
+    dropdown.style.display = isVisible ? "none" : "block";
+
+    clearTimeout(dropdownTimeout);
+    if (!isVisible) {
+      dropdownTimeout = setTimeout(() => {
+        dropdown.style.display = "none";
+      }, 5000);
+    }
   }
-});
-
-// Toggle Portal Dropdown with Auto-Close
-let dropdownTimeout;
-function toggleDropdown(event) {
-  event.preventDefault();
-  const dropdown = document.getElementById("portalDropdown");
-
-  const isVisible = dropdown.style.display === "block";
-  dropdown.style.display = isVisible ? "none" : "block";
-
-  clearTimeout(dropdownTimeout);
-  if (!isVisible) {
-    dropdownTimeout = setTimeout(() => {
-      dropdown.style.display = "none";
-    }, 5000);
-  }
-}
 </script>
