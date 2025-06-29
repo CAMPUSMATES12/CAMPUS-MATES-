@@ -362,6 +362,17 @@
       </div>
     </div>
 
+<!-- JUPEB Past Questions -->
+<div class="course">
+  <h3>JUPEB</h3>
+  <div class="topics" style="display: none;">
+    <a class="download" href="https://drive.google.com/uc?export=download&id=1Vdrsjn6n-GRKhABZEfSLcsRHHnYrqbsq" download>📄 BIO PQ</a>
+    <a class="download" href="https://drive.google.com/uc?export=download&id=1oCwWOV_JOyfOiY8gXMoT2BvyZSCE030D" download>📄 MATHS PQ</a>
+    <a class="download" href="https://drive.google.com/uc?export=download&id=1dH-T8-oBZOVoLJwVJm3J9VOtmKj956Ql" download>📄 CHEM PQ</a>
+    <a class="download" href="https://drive.google.com/uc?export=download&id=14x18r_6RxShCrPtNhVbCikYX79RrNoMk" download>📄 PHY PQ</a>
+  </div>
+</div>
+
     <div id="calendar" class="section">
   <h2>📆 Academic Calendar</h2>
   <a 
@@ -408,91 +419,107 @@
 <script>
   const sidebar = document.getElementById("sidebar");
 
-  function toggleSidebar() {
-    sidebar.classList.toggle("show-sidebar");
-    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+function toggleSidebar() {
+  sidebar.classList.toggle("show-sidebar");
+  sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+  sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
+  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+}
+
+// Load theme from localStorage on page load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  sidebar.classList.add("dark");
+}
+
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+  const section = document.getElementById(id);
+  if (section) {
+    section.classList.add("active");
   }
+  sidebar.classList.remove("show-sidebar");
 
-  function toggleTheme() {
-    document.body.classList.toggle("dark");
-    sidebar.classList.toggle("dark", document.body.classList.contains("dark"));
-    localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+  const sectionName = {
+    news: "Home",
+    courses: "Courses",
+    calendar: "Calendar",
+    feedback: "Feedback",
+    about: "About"
+  };
+  document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.style.display = (el.style.display === "flex") ? "none" : "flex";
   }
+}
 
-  // Load theme from localStorage on page load
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    sidebar.classList.add("dark");
+// Toggle Search Bar Visibility
+function toggleSearchBar() {
+  const bar = document.getElementById("searchBarContainer");
+  if (bar) {
+    bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
   }
+}
 
-  function showSection(id) {
-    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-    const section = document.getElementById(id);
-    if (section) {
-      section.classList.add("active");
-    }
-    sidebar.classList.remove("show-sidebar");
-
-    const sectionName = {
-      news: "Home",
-      courses: "Courses",
-      calendar: "Calendar",
-      feedback: "Feedback",
-      about: "About"
-    };
-    document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
-  }
-
-  function toggle(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.display = (el.style.display === "flex") ? "none" : "flex";
-    }
-  }
-
-  // Toggle Search Bar Visibility
-  function toggleSearchBar() {
-    const bar = document.getElementById("searchBarContainer");
-    if (bar) {
-      bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
-    }
-  }
-
-  // Attach search input filter
-  document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", function () {
-        const value = this.value.toLowerCase();
-        document.querySelectorAll(".course").forEach(course => {
-          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
-        });
+// Attach event listeners after DOM loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Search input filter
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      const value = this.value.toLowerCase();
+      document.querySelectorAll(".course").forEach(course => {
+        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
       });
-    }
-  });
-
-  // Floating Notification Panel Auto-Show
-  window.addEventListener("load", () => {
-    const notifPanel = document.getElementById("notifPanel");
-    if (notifPanel) {
-      notifPanel.style.display = "block";
-    }
-  });
-
-  // Toggle Portal Dropdown with Auto-Close
-  let dropdownTimeout;
-  function toggleDropdown(event) {
-    event.preventDefault();
-    const dropdown = document.getElementById("portalDropdown");
-
-    const isVisible = dropdown.style.display === "block";
-    dropdown.style.display = isVisible ? "none" : "block";
-
-    clearTimeout(dropdownTimeout);
-    if (!isVisible) {
-      dropdownTimeout = setTimeout(() => {
-        dropdown.style.display = "none";
-      }, 5000);
-    }
+    });
   }
+
+  // Toggle topics visibility on course title click
+  document.querySelectorAll('.course h3').forEach(title => {
+    title.style.cursor = 'pointer';
+    title.addEventListener('click', () => {
+      const topicsDiv = title.nextElementSibling;
+      if (topicsDiv) {
+        if (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') {
+          topicsDiv.style.display = 'flex'; // or 'block' depending on your CSS
+        } else {
+          topicsDiv.style.display = 'none';
+        }
+      }
+    });
+  });
+});
+
+// Floating Notification Panel Auto-Show
+window.addEventListener("load", () => {
+  const notifPanel = document.getElementById("notifPanel");
+  if (notifPanel) {
+    notifPanel.style.display = "block";
+  }
+});
+
+// Toggle Portal Dropdown with Auto-Close
+let dropdownTimeout;
+function toggleDropdown(event) {
+  event.preventDefault();
+  const dropdown = document.getElementById("portalDropdown");
+
+  const isVisible = dropdown.style.display === "block";
+  dropdown.style.display = isVisible ? "none" : "block";
+
+  clearTimeout(dropdownTimeout);
+  if (!isVisible) {
+    dropdownTimeout = setTimeout(() => {
+      dropdown.style.display = "none";
+    }, 5000);
+  }
+}
 </script>
