@@ -89,5 +89,58 @@
     </a>
   </div>
 
+  <!-- Firebase Messaging Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+      authDomain: "campusmate-51287.firebaseapp.com",
+      projectId: "campusmate-51287",
+      storageBucket: "campusmate-51287.firebasestorage.app",
+      messagingSenderId: "902488706597",
+      appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+      measurementId: "G-RBL06KGEGY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }).catch(err => {
+          console.error('Service Worker registration failed:', err);
+        });
+    }
+
+    // Request permission and get FCM token
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        getToken(messaging, { vapidKey: 'BA89wWoaUNVa5p_6jnOtwQ99EHHuNV59M9FEC2jIPuKK-Jw2ID2YAlyHsBWnHV4gnXNi1Alvkm4SZJ6bvXFZqzk' }).then((currentToken) => {
+          if (currentToken) {
+            console.log('FCM Token:', currentToken);
+            // TODO: Send this token to your backend server for push notifications
+          } else {
+            console.log('No registration token available. Request permission to generate one.');
+          }
+        }).catch((err) => {
+          console.log('An error occurred while retrieving token. ', err);
+        });
+      } else {
+        console.log('Notification permission denied');
+      }
+    });
+
+    // Handle incoming foreground messages
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      alert(`Notification: ${payload.notification.title}\n${payload.notification.body}`);
+    });
+  </script>
+
 </body>
 </html>
