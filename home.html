@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -514,6 +514,7 @@
 
 <!-- Main UI Script -->
 <script>
+  // Toggle Sidebar and Theme
   const sidebar = document.getElementById("sidebar");
 
   function toggleSidebar() {
@@ -535,9 +536,8 @@
   function showSection(id) {
     document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
     const section = document.getElementById(id);
-    if (section) {
-      section.classList.add("active");
-    }
+    if (section) section.classList.add("active");
+
     sidebar.classList.remove("show-sidebar");
 
     const sectionName = {
@@ -546,29 +546,15 @@
       calendar: "Calendar",
       feedback: "Feedback",
       about: "About",
-      quiz: "Quiz"
+      quiz: "Quiz",
+      portal: "School Portal"
     };
     document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
 
-    if (id === "quiz") {
-      renderQuizQuestion(); // ✅ Load quiz question
-    }
+    if (id === "quiz") renderQuizQuestion();
   }
 
-  function toggle(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.display = (el.style.display === "flex") ? "none" : "flex";
-    }
-  }
-
-  function toggleSearchBar() {
-    const bar = document.getElementById("searchBarContainer");
-    if (bar) {
-      bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
-    }
-  }
-
+  // Course Search + Toggle Topics
   document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
     if (searchInput) {
@@ -591,13 +577,13 @@
     });
   });
 
+  // 🔔 Notification Panel
   window.addEventListener("load", () => {
     const notifPanel = document.getElementById("notifPanel");
-    if (notifPanel) {
-      notifPanel.style.display = "block";
-    }
+    if (notifPanel) notifPanel.style.display = "block";
   });
 
+  // 🔽 Dropdown Toggle
   let dropdownTimeout;
   function toggleDropdown(event) {
     event.preventDefault();
@@ -639,13 +625,15 @@
   ];
 
   let currentQuestion = 0;
+  let userAnswers = new Array(quizQuestions.length).fill(null);
 
   function renderQuizQuestion() {
     const quizContainer = document.getElementById("quiz-container");
     if (!quizContainer) return;
-    quizContainer.innerHTML = "";
 
+    quizContainer.innerHTML = "";
     const q = quizQuestions[currentQuestion];
+
     const questionEl = document.createElement("div");
     questionEl.classList.add("question");
 
@@ -659,6 +647,9 @@
       input.type = "radio";
       input.name = "quiz";
       input.value = opt;
+      if (userAnswers[currentQuestion] === opt) {
+        input.checked = true;
+      }
       label.appendChild(input);
       label.appendChild(document.createTextNode(" " + opt));
       questionEl.appendChild(label);
@@ -669,6 +660,9 @@
   }
 
   function nextQuestion() {
+    const selected = document.querySelector("input[name='quiz']:checked");
+    if (selected) userAnswers[currentQuestion] = selected.value;
+
     if (currentQuestion < quizQuestions.length - 1) {
       currentQuestion++;
       renderQuizQuestion();
@@ -683,14 +677,31 @@
   }
 
   function submitQuiz() {
-    const answers = document.querySelectorAll("input[name='quiz']:checked");
-    const selectedAnswer = answers[answers.length - 1]?.value;
-    const correct = quizQuestions[currentQuestion].answer;
+    const selected = document.querySelector("input[name='quiz']:checked");
+    if (selected) userAnswers[currentQuestion] = selected.value;
+
+    if (userAnswers.includes(null)) {
+      alert("❗ Please answer all questions before submitting.");
+      return;
+    }
+
     let score = 0;
+    let summary = "📊 Quiz Summary:\n\n";
 
-    if (selectedAnswer === correct) score++;
+    for (let i = 0; i < quizQuestions.length; i++) {
+      const correct = quizQuestions[i].answer;
+      const user = userAnswers[i];
+      const status = user === correct ? "✅ Correct" : "❌ Wrong";
+      if (user === correct) score++;
 
-    alert(`✅ You scored ${score} out of 1 for this question!`);
+      summary += `Q${i + 1}: ${quizQuestions[i].question}\nYour answer: ${user}\nCorrect answer: ${correct}\n${status}\n\n`;
+    }
+
+    summary += `🎉 Final Score: ${score} / ${quizQuestions.length}`;
+    alert(summary);
+
+    currentQuestion = 0;
+    userAnswers.fill(null);
+    renderQuizQuestion();
   }
-
 </script>
