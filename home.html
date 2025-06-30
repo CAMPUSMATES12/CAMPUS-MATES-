@@ -26,7 +26,6 @@
   });
 </script>
 
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -179,6 +178,25 @@
   margin-right: 5px;
 }
 
+
+  .slide-widget {
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .slide-widget.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-widget.hide {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+
+
   </style>
 </head>
 <body>
@@ -220,8 +238,69 @@
     <a href="https://chrdportal.uniosun.edu.ng/portal/" target="_blank" rel="noopener noreferrer">🧪 JUPEB Portal</a>
   </div>
 </div> 
-
   
+<!-- Floating Widget Button -->
+<button onclick="toggleWidget()" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #002F6C;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 10000;
+  cursor: pointer;
+">📘</button>
+
+<!-- Fullscreen Widget Panel -->
+<div id="widgetPanel" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+">
+  <button onclick="toggleWidget()" style="
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: #002F6C;
+    cursor: pointer;
+  ">✖</button>
+
+  <h2 style="margin-top: 40px; color: #002F6C;">📅 Class Schedule</h2>
+  <p><strong>MTH 102</strong></p>
+  <p>🗓️ Wednesday: 2:00 PM – 4:00 PM</p>
+  <p>🗓️ Thursday: 8:00 AM – 10:00 AM</p>
+</div>
+
+<!-- Animation Style -->
+<style>
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+</style>
+
 <div id="quiz" class="section">
   <h2>📝 Quiz</h2>
   
@@ -241,8 +320,8 @@
       <h2>Campus News</h2>
 
       <!-- First News -->
-      
-      <div class="course">
+
+<div class="course">
   <h3>📢 Important Announcement – MTH 102 Class Update</h3>
     Please note that <strong>MTH 102</strong> will now hold twice a week as follows:
   </p>
@@ -253,7 +332,6 @@
   <p>Kindly take note and adjust your schedules accordingly.</p>
   <p style="text-align:center; font-size:14px; color:gray;">Posted on June 30, 2025 at 10:00am</p>
 </div>
-     
       
       <div class="course">
   <h3>📢 NELFUND INSTITUTIONAL PAYMENT UPDATE</h3>
@@ -494,9 +572,9 @@
     </div>
 
 
-<!-- Main UI Script -->
+
 <script>
-  // Toggle Sidebar and Theme
+  // Sidebar and Theme Logic
   const sidebar = document.getElementById("sidebar");
 
   function toggleSidebar() {
@@ -536,36 +614,7 @@
     if (id === "quiz") renderQuizQuestion();
   }
 
-  // Course Search + Toggle Topics
-  document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", function () {
-        const value = this.value.toLowerCase();
-        document.querySelectorAll(".course").forEach(course => {
-          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
-        });
-      });
-    }
-
-    document.querySelectorAll('.course h3').forEach(title => {
-      title.style.cursor = 'pointer';
-      title.addEventListener('click', () => {
-        const topicsDiv = title.nextElementSibling;
-        if (topicsDiv) {
-          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
-        }
-      });
-    });
-  });
-
-  // 🔔 Notification Panel
-  window.addEventListener("load", () => {
-    const notifPanel = document.getElementById("notifPanel");
-    if (notifPanel) notifPanel.style.display = "block";
-  });
-
-  // 🔽 Dropdown Toggle
+  // Dropdown Toggle
   let dropdownTimeout;
   function toggleDropdown(event) {
     event.preventDefault();
@@ -581,27 +630,54 @@
       }, 5000);
     }
   }
-  
+
+  // Toggle Search Bar
   function toggleSearchBar() {
-  const bar = document.getElementById("searchBarContainer");
-  if (bar) {
-    bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+    const bar = document.getElementById("searchBarContainer");
+    if (bar) {
+      bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+    }
+  }
+
+  function toggleWidget() {
+  const panel = document.getElementById("widgetPanel");
+  if (panel.style.display === "none" || panel.style.display === "") {
+    panel.style.display = "block";
+  } else {
+    panel.style.display = "none";
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", function () {
-      const value = this.value.toLowerCase();
-      document.querySelectorAll(".course").forEach(course => {
-        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+  // DOM Ready
+  document.addEventListener("DOMContentLoaded", function () {
+    // Search Bar Logic
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll(".course").forEach(course => {
+          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+        });
+      });
+    }
+
+    // Course Topics Toggle
+    document.querySelectorAll('.course h3').forEach(title => {
+      title.style.cursor = 'pointer';
+      title.addEventListener('click', () => {
+        const topicsDiv = title.nextElementSibling;
+        if (topicsDiv) {
+          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
+        }
       });
     });
-  }
-});
 
-  // ✅ Quiz Logic
+    // Notification panel on load
+    const notifPanel = document.getElementById("notifPanel");
+    if (notifPanel) notifPanel.style.display = "block";
+  });
+
+  // Quiz Logic
   const quizQuestions = [
     { question: "1. What is the powerhouse of the cell?", options: ["Mitochondrion", "Ribosome", "Lysosome", "Golgi body"], answer: "Mitochondrion" },
     { question: "2. What organelle contains genetic material?", options: ["Nucleus", "Cytoplasm", "Endoplasmic Reticulum", "Cell wall"], answer: "Nucleus" },
@@ -648,9 +724,7 @@ document.addEventListener("DOMContentLoaded", function () {
       input.type = "radio";
       input.name = "quiz";
       input.value = opt;
-      if (userAnswers[currentQuestion] === opt) {
-        input.checked = true;
-      }
+      if (userAnswers[currentQuestion] === opt) input.checked = true;
       label.appendChild(input);
       label.appendChild(document.createTextNode(" " + opt));
       questionEl.appendChild(label);
