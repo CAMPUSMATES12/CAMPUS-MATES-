@@ -599,6 +599,25 @@
       }, 5000);
     }
   }
+  
+  function toggleSearchBar() {
+  const bar = document.getElementById("searchBarContainer");
+  if (bar) {
+    bar.style.display = (bar.style.display === "none" || bar.style.display === "") ? "block" : "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      const value = this.value.toLowerCase();
+      document.querySelectorAll(".course").forEach(course => {
+        course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+      });
+    });
+  }
+});
 
   // ✅ Quiz Logic
   const quizQuestions = [
