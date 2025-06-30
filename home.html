@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -193,15 +193,14 @@
   </div>
 </div>
 
-  <div class="sidebar" id="sidebar">
+ <div class="sidebar" id="sidebar">
   <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
   <a href="#" onclick="showSection('home'); return false;">🏠 Home</a>
   <a href="#" onclick="showSection('courses'); return false;">📘 Courses</a>
   <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
   <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
   <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
- <a href="#" onclick="showSection('quiz'); return false;">📝 Quiz</a>
-<div>
+  <a href="#" onclick="showSection('quiz'); return false;">📝 Quiz</a>
 
   <!-- School Portal Dropdown -->
   <a href="#" onclick="toggleDropdown(event)">🎓 School Portal ▼</a>
@@ -212,6 +211,20 @@
 </div> 
 
   
+<div id="quiz" class="section">
+  <h2>📝 Quiz</h2>
+  
+  <!-- Quiz questions will load here via JavaScript -->
+  <div id="quiz-container" class="quiz-box" style="margin-top: 20px;"></div>
+
+  <!-- Quiz Navigation Buttons -->
+  <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+    <button onclick="prevQuestion()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">⬅️ Previous</button>
+    <button onclick="nextQuestion()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">➡️ Next</button>
+    <button onclick="submitQuiz()" style="padding: 10px 20px; font-size: 16px; background-color: #002F6C; color: white; border: none; border-radius: 6px; cursor: pointer;">✅ Submit</button>
+  </div>
+</div>
+
   <div class="content">
     <div id="home" class="section active">
       <h2>Campus News</h2>
@@ -453,11 +466,8 @@
       </div>
     </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
 
-  <!-- Firebase Messaging (type="module") -->
+  <!-- Firebase Messaging -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
@@ -502,7 +512,7 @@
   });
 </script>
 
-<!-- Main UI + Quiz Script -->
+<!-- Main UI Script -->
 <script>
   const sidebar = document.getElementById("sidebar");
 
@@ -539,6 +549,10 @@
       quiz: "Quiz"
     };
     document.getElementById("section-name").innerText = sectionName[id] || "CampusMate";
+
+    if (id === "quiz") {
+      renderQuizQuestion(); // ✅ Load quiz question
+    }
   }
 
   function toggle(id) {
@@ -628,6 +642,7 @@
 
   function renderQuizQuestion() {
     const quizContainer = document.getElementById("quiz-container");
+    if (!quizContainer) return;
     quizContainer.innerHTML = "";
 
     const q = quizQuestions[currentQuestion];
@@ -678,10 +693,4 @@
     alert(`✅ You scored ${score} out of 1 for this question!`);
   }
 
-  // Automatically load first question when section is visible
-  document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("quiz")) {
-    renderQuizQuestion(); // 🔥 This shows the first question
-  }
-});
 </script>
