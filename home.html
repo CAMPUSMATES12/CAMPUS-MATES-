@@ -22,6 +22,12 @@
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7",
+      notifyButton: {
+        enable: true, // This shows the bell icon
+        size: 'medium',
+        position: 'bottom-right',
+        theme: 'default'
+      }
     });
   });
 </script>
