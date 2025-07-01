@@ -1,130 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CampusMate – News</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f9fbff;
-      margin: 0;
-      padding: 0;
-    }
+importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js");
 
-    nav {
-      background: #2d87f0;
-      padding: 15px;
-      text-align: center;
-    }
+firebase.initializeApp({
+  apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+  authDomain: "campusmate-51287.firebaseapp.com",
+  projectId: "campusmate-51287",
+  storageBucket: "campusmate-51287.appspot.com",
+  messagingSenderId: "902488706597",
+  appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+  measurementId: "G-RBL06KGEGY"
+});
 
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    .container {
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    h1 {
-      color: #2d87f0;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .news-item {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .news-item h2 {
-      margin-top: 0;
-      color: #333;
-    }
-
-    .news-item p {
-      margin: 10px 0;
-      color: #555;
-    }
-
-    .news-item small {
-      color: #888;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="courses.html">Courses</a>
-    <a href="me.html">Me</a>
-    <a href="news.html">News</a>
-  </nav>
-
-  <div class="container">
-    <h1>📢 Campus News & Updates</h1>
-    
-    <!-- News Posts Will Go Here -->
-    <div id="newsList">
-      <p>Loading news...</p>
-    </div>
-  </div>
-
-  <!-- Supabase Integration (optional) -->
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-    const supabase = createClient(
-      'https://cjwhdivmefdzzlpruazi.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqd2hkaXZtZWZkenpscHJ1YXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4Nzk0MzMsImV4cCI6MjA2NjQ1NTQzM30.T4SwzkP1HTOEzN8zRtH_fMIbiiqJcOLFVeM_ndgTn08'
-    );
-
-    const newsList = document.getElementById('newsList');
-
-    async function loadNews() {
-      const { data, error } = await supabase
-        .from('news')
-        .select('*')
-        .order('date', { ascending: false });
-
-      if (error) {
-        newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        newsList.innerHTML = `<p>No news available at the moment.</p>`;
-        return;
-      }
-
-      newsList.innerHTML = '';
-      data.forEach(post => {
-        const item = document.createElement('div');
-        item.className = 'news-item';
-        item.innerHTML = `
-          <h2>${post.title}</h2>
-          <p>${post.content}</p>
-          <small>📅 ${new Date(post.date).toLocaleString()}</small>
-        `;
-        newsList.appendChild(item);
-      });
-    }
-
-    loadNews();
-  </script>
-
-</body>
-</html>
+const messaging = firebase.messaging();
