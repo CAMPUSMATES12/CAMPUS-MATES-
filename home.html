@@ -16,21 +16,9 @@
   />
 </div>
 
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "8e919908-da31-4352-bf62-99a5c9ecbfe7",
-      notifyButton: {
-        enable: true, // This shows the bell icon
-        size: 'medium',
-        position: 'bottom-right',
-        theme: 'default'
-      }
-    });
-  });
-</script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js"></script>
 
   <style>
     body {
@@ -662,7 +650,53 @@
       </div>
     </div>
 
+<script>
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDIgrTHLZRE3B2qaZgl-7B-yLgOYQt3BU",
+    authDomain: "campusmate-51287.firebaseapp.com",
+    projectId: "campusmate-51287",
+    storageBucket: "campusmate-51287.appspot.com",
+    messagingSenderId: "902488706597",
+    appId: "1:902488706597:web:26ef1a35beb7a6cbeb39cc",
+    measurementId: "G-RBL06KGEGY"
+  };
 
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Get Messaging
+  const messaging = firebase.messaging();
+
+  // Request permission to send notifications
+  function initFCM() {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        messaging.getToken({ vapidKey: "BA89wWoaUNVa5p_6jnOtwQ99EHHuNV59M9FEC2jIPuKK-Jw2ID2YAlyHsBWnHV4gnXNi1Alvkm4SZJ6bvXFZqzk" }).then((currentToken) => {
+          if (currentToken) {
+            console.log("✅ FCM Token:", currentToken);
+            // You can send this token to your backend or Supabase to save
+          } else {
+            console.log("⚠️ No registration token available.");
+          }
+        }).catch((err) => {
+          console.log("❌ An error occurred while retrieving token. ", err);
+        });
+      } else {
+        console.log("❌ Permission not granted for Notification");
+      }
+    });
+  }
+
+  // Call FCM
+  initFCM();
+
+  // Listen for messages while the site is open
+  messaging.onMessage((payload) => {
+    console.log("📬 Message received. ", payload);
+    alert(`🔔 Notification: ${payload.notification.title} - ${payload.notification.body}`);
+  });
+</script>
 
 <script>
   // Sidebar and Theme Logic
