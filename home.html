@@ -239,6 +239,7 @@
   </div>
 </div> 
   
+
 <!-- Floating Widget Button -->
 <button onclick="toggleWidget()" style="
   position: fixed;
@@ -267,11 +268,12 @@
   background-color: #fff;
   z-index: 9999;
   padding: 20px;
-  box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
   overflow-y: auto;
+  box-sizing: border-box;
   animation: slideUp 0.3s ease-out;
 ">
+  <!-- Close Button -->
   <button onclick="toggleWidget()" style="
     position: absolute;
     top: 15px;
@@ -283,13 +285,86 @@
     cursor: pointer;
   ">✖</button>
 
-  <h2 style="margin-top: 40px; color: #002F6C;">📅 Class Schedule</h2>
-  <p><strong>MTH 102</strong></p>
-  <p>🗓️ Wednesday: 2:00 PM – 4:00 PM</p>
-  <p>🗓️ Thursday: 8:00 AM – 10:00 AM</p>
+  <!-- Title -->
+  <h2 style="margin-top: 40px; color: #002F6C;">📅 Weekly Class Timetable</h2>
+
+  <!-- Countdown -->
+  <div id="nextClassInfo" style="margin-bottom: 20px; font-size: 16px; color: #002F6C;">
+    <strong>⏳ Loading next class info...</strong>
+  </div>
+
+  <!-- Today's Classes -->
+  <div id="todayClasses" style="margin-bottom: 30px; font-size: 15px; color: #222;">
+    <strong>📅 Today’s Classes:</strong>
+    <ul id="classList" style="padding-left: 20px;"></ul>
+  </div>
+
+  <!-- Vertical Format Timetable -->
+  <div style="font-size: 14px; line-height: 1.6;">
+    <div style="margin-bottom: 20px;">
+      <strong style="color:#002F6C;">🟦 Monday</strong>
+      <ul>
+        <li>11:00 AM – CHM 102</li>
+        <li>2:00 PM – CHM 102</li>
+        <li>4:00 PM – BIO108 (Lab)</li>
+        <li>5:00 PM – BIO108</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <strong style="color:#002F6C;">🟦 Tuesday</strong>
+      <ul>
+        <li>8:00 AM – PHY102</li>
+        <li>11:00 AM – PHY102</li>
+        <li>4:00 PM – CHM108 / PHY108</li>
+        <li>5:00 PM – CHM108 / PHY108</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <strong style="color:#002F6C;">🟦 Wednesday</strong>
+      <ul>
+        <li>10:00 AM – CHM108 / PHY108</li>
+        <li>11:00 AM – CHM108 / PHY108</li>
+        <li>12:00 PM – MCB104</li>
+        <li>2:00 PM – MCB104</li>
+        <li>4:00 PM – ESI102 (1K)</li>
+        <li>5:00 PM – MCB102 (Omole)</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <strong style="color:#002F6C;">🟦 Thursday</strong>
+      <ul>
+        <li>8:00 AM – MTH 102</li>
+        <li>9:00 AM – MTH 102</li>
+        <li>10:00 AM – BIO 102</li>
+        <li>12:00 PM – BIO 102</li>
+        <li>2:00 PM – BIO108</li>
+        <li>4:00 PM – BIO108</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <strong style="color:#002F6C;">🟦 Friday</strong>
+      <ul>
+        <li>8:00 AM – GST 112</li>
+        <li>9:00 AM – GST 112</li>
+        <li>1:00 PM – JUMAT</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<!-- Animation Style -->
+<!-- Script Toggle -->
+<script>
+  function toggleWidget() {
+    const panel = document.getElementById("widgetPanel");
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  }
+</script>
+
+<!-- Animation -->
 <style>
 @keyframes slideUp {
   from {
@@ -320,8 +395,8 @@
       <h2>Campus News</h2>
 
       <!-- First News -->
-      
-      <div class="course" style="background: linear-gradient(to right, #002F6C, #1E88E5); color: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-bottom: 20px;">
+
+<div class="course" style="background: linear-gradient(to right, #002F6C, #1E88E5); color: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-bottom: 20px;">
   <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="CampusMate Logo" style="width: 80px; border-radius: 50%; margin-bottom: 10px;" />
   <h3 style="margin-top: 10px;">🎉 Happy New Month, Campus Mates!</h3>
   <p style="font-size: 16px;">
@@ -649,48 +724,107 @@
     }
   }
 
+  // Widget Toggle
   function toggleWidget() {
-  const panel = document.getElementById("widgetPanel");
-  if (panel.style.display === "none" || panel.style.display === "") {
-    panel.style.display = "block";
-  } else {
-    panel.style.display = "none";
-  setTimeout(() => {
-    alert("📚 Don't forget your MTH 102 class at 2 PM today!");
-  }, 30000); // 30 seconds
+    const panel = document.getElementById("widgetPanel");
+    if (panel.style.display === "none" || panel.style.display === "") {
+      panel.style.display = "block";
+    } else {
+      panel.style.display = "none";
+    }
   }
-}
 
-  // DOM Ready
-  document.addEventListener("DOMContentLoaded", function () {
-    // Search Bar Logic
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", function () {
-        const value = this.value.toLowerCase();
-        document.querySelectorAll(".course").forEach(course => {
-          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
-        });
-      });
+  // Timetable and Countdown
+  const timetable = {
+    Monday: [
+      { subject: "CHM 102", hour: 11 },
+      { subject: "CHM 102", hour: 14 },
+      { subject: "BIO108 (Lab)", hour: 16 },
+    ],
+    Tuesday: [
+      { subject: "PHY102", hour: 8 },
+      { subject: "PHY102", hour: 11 },
+      { subject: "MCB102 (Yusuf)", hour: 13 },
+      { subject: "MCB102 (Yusuf)", hour: 15 },
+      { subject: "CHM108 / PHY108", hour: 16 },
+    ],
+    Wednesday: [
+      { subject: "CHM108 / PHY108", hour: 10 },
+      { subject: "MCB104", hour: 12 },
+      { subject: "MCB104", hour: 14 },
+      { subject: "ESI102 (1k)", hour: 16 },
+      { subject: "MCB102 (Omole)", hour: 17 },
+    ],
+    Thursday: [
+      { subject: "MTH 102", hour: 8 },
+      { subject: "MTH 102", hour: 9 },
+      { subject: "BIO 102", hour: 10 },
+      { subject: "BIO 102", hour: 12 },
+      { subject: "BIO108", hour: 14 },
+      { subject: "BIO108", hour: 16 },
+    ],
+    Friday: [
+      { subject: "GST 112", hour: 8 },
+      { subject: "GST 112", hour: 9 },
+      { subject: "JUMAT", hour: 13 },
+    ],
+  };
+
+  function updateClassInfo() {
+    const now = new Date();
+    const day = now.toLocaleString("en-US", { weekday: "long" });
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+
+    const classesToday = timetable[day] || [];
+    let nextClass = null;
+    let classHTML = "";
+
+    for (let cls of classesToday) {
+      classHTML += `<li>${cls.subject} – ${cls.hour}:00</li>`;
+      if (!nextClass && (cls.hour > hour || (cls.hour === hour && minute < 0))) {
+        nextClass = cls;
+      }
     }
 
-    // Course Topics Toggle
-    document.querySelectorAll('.course h3').forEach(title => {
-      title.style.cursor = 'pointer';
-      title.addEventListener('click', () => {
-        const topicsDiv = title.nextElementSibling;
-        if (topicsDiv) {
-          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
-        }
-      });
-    });
+    const list = document.getElementById("classList");
+    if (list) list.innerHTML = classHTML || "<li>No class today 🎉</li>";
 
-    // Notification panel on load
-    const notifPanel = document.getElementById("notifPanel");
-    if (notifPanel) notifPanel.style.display = "block";
-  });
+    const infoDiv = document.getElementById("nextClassInfo");
+    if (infoDiv) {
+      if (nextClass) {
+        const classTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), nextClass.hour, 0, 0);
+        const diff = Math.floor((classTime - now) / 1000);
+        let h = Math.floor(diff / 3600);
+        let m = Math.floor((diff % 3600) / 60);
+        let s = diff % 60;
+        infoDiv.innerHTML = `<strong>📘 Next Class: ${nextClass.subject} at ${nextClass.hour}:00</strong><br>
+          ⏳ Starts in <span style="color: green">${h}h ${m}m ${s}s</span>`;
+      } else {
+        infoDiv.innerHTML = "✅ No more classes for today!";
+      }
+    }
+  }
 
-  // Quiz Logic
+  function checkReminders() {
+    const now = new Date();
+    const day = now.toLocaleString("en-US", { weekday: "long" });
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+
+    const classesToday = timetable[day] || [];
+    for (let cls of classesToday) {
+      if (cls.hour === hour && minute === 55) {
+        alert(`🔔 Reminder: ${cls.subject} starts in 5 minutes at ${cls.hour}:00!`);
+      }
+    }
+  }
+
+  setInterval(updateClassInfo, 1000);
+  setInterval(checkReminders, 60000);
+  updateClassInfo();
+
+  // Quiz Section
   const quizQuestions = [
     { question: "1. What is the powerhouse of the cell?", options: ["Mitochondrion", "Ribosome", "Lysosome", "Golgi body"], answer: "Mitochondrion" },
     { question: "2. What organelle contains genetic material?", options: ["Nucleus", "Cytoplasm", "Endoplasmic Reticulum", "Cell wall"], answer: "Nucleus" },
@@ -792,4 +926,31 @@
     userAnswers.fill(null);
     renderQuizQuestion();
   }
+
+  // On load
+  document.addEventListener("DOMContentLoaded", function () {
+    // Setup search
+    const searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll(".course").forEach(course => {
+          course.style.display = course.innerText.toLowerCase().includes(value) ? "block" : "none";
+        });
+      });
+    }
+
+    // Toggle course topics
+    document.querySelectorAll('.course h3').forEach(title => {
+      title.style.cursor = 'pointer';
+      title.addEventListener('click', () => {
+        const topicsDiv = title.nextElementSibling;
+        if (topicsDiv) {
+          topicsDiv.style.display = (topicsDiv.style.display === 'none' || topicsDiv.style.display === '') ? 'flex' : 'none';
+        }
+      });
+    });
+
+    renderQuizQuestion();
+  });
 </script>
