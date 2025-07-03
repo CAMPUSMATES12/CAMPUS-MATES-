@@ -732,68 +732,6 @@
       </div>
     </div>
     
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script>
-  const supabase = supabase.createClient(
-    "https://xmegbhxpfeiiieazddfaj.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM"
-  );
-
-  // SIGNUP
-  document.getElementById("signup-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const full_name = document.getElementById("fullname").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const college = document.getElementById("college").value;
-    const password = document.getElementById("password").value;
-    const msgDiv = document.getElementById("auth-message");
-
-    // 1. Sign up
-    const { data, error } = await supabase.auth.signUp({ email, password });
-
-    if (error) {
-      msgDiv.innerText = "❌ " + error.message;
-      return;
-    }
-
-    // 2. Insert into profiles table
-    const userId = data.user.id;
-    const { error: insertError } = await supabase.from("profiles").insert([
-      { id: userId, full_name, college, email },
-    ]);
-
-    if (insertError) {
-      msgDiv.innerText = "✅ Signed up, but failed to save user profile.";
-    } else {
-      msgDiv.innerText = "✅ Account created! Redirecting...";
-    }
-
-    // Redirect
-    setTimeout(() => {
-      window.location.href = "home.html";
-    }, 1500);
-  });
-
-  // LOGIN
-  document.getElementById("login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value;
-    const msgDiv = document.getElementById("auth-message");
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      msgDiv.innerText = "❌ " + error.message;
-    } else {
-      msgDiv.innerText = "✅ Login successful! Redirecting...";
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 1000);
-    }
-  });
-</script>
-
 <script>
   // Your Firebase config
   const firebaseConfig = {
