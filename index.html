@@ -2,148 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CampusMate – Official App</title>
-  <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusMate – Login or Sign Up</title>
+  <link rel="icon" href="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4ff;
+      background: #e9f3ff;
       margin: 0;
       padding: 0;
-      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .auth-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #2d87f0;
+      margin-bottom: 10px;
       text-align: center;
     }
 
-    .header {
+    p {
+      color: #555;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
       background: #2d87f0;
       color: white;
-      padding: 20px;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .content {
-      padding: 30px 20px;
-    }
-
-    .screenshot {
-      max-width: 200px;
-      margin: 30px auto;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: block;
-    }
-
-    .features {
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto 40px;
-    }
-
-    .features li {
+      font-weight: bold;
+      cursor: pointer;
       margin-bottom: 10px;
     }
 
-    .button-row {
-      margin-top: 30px;
+    button:hover {
+      background: #186dd9;
     }
 
-    .download-btn, .website-btn {
-      padding: 15px 25px;
-      font-size: 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      margin: 10px;
-      transition: background 0.3s;
-    }
-
-    .download-btn {
-      background: #2d87f0;
-      color: white;
-    }
-
-    .download-btn:hover {
-      background: #155fd4;
-    }
-
-    .website-btn {
-      background: #10b981;
-      color: white;
-    }
-
-    .website-btn:hover {
-      background: #059669;
-    }
-
-    .note {
+    .toggle-link {
+      color: #2d87f0;
+      text-align: center;
+      cursor: pointer;
       font-size: 14px;
-      color: #555;
-      margin-top: -8px;
+      display: block;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+
+    #auth-message {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>🚀 Launching Today: CampusMate App</h1>
-    <p>The Official Android App for UNIOSUN 100L Students</p>
+  <div class="auth-container">
+    <h2 id="form-title">Student Login</h2>
+    <p id="form-desc">To access the exclusive contents of the app, please login with your account details.</p>
+
+    <div id="auth-message"></div>
+
+    <!-- Login Form -->
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email Address" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Sign Up Form (Hidden by default) -->
+    <form id="signup-form" style="display: none;">
+      <input type="text" id="fullname" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <select id="college" required>
+        <option value="">Select College</option>
+        <option value="College of Health Sciences">College of Health Sciences</option>
+        <option value="College of Science, Engineering and Technology">College of Science, Engineering and Technology</option>
+        <option value="Faculty of Computing and Information Technology">Faculty of Computing and Information Technology</option>
+      </select>
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <span class="toggle-link" id="toggle-form">Don't have an account? Sign Up</span>
   </div>
 
-  <div class="content">
-    <!-- CampusMate Logo -->
-    <img class="screenshot" src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="CampusMate Logo">
-
-    <ul class="features">
-      <li>✅ Real-time announcements & verified notifications via home-screen widget</li>
-      <li>📚 Central document hub — like a Play Store for your courses</li>
-      <li>🌙 Clean UI with dark mode for night use</li>
-      <li>⚡ Fast, offline-capable progressive app experience</li>
-    </ul>
-
-    <div class="button-row">
-      <!-- Download Button (Android only) -->
-      <a class="download-btn" href="https://drive.google.com/uc?export=download&id=1BhPh_3kT-VXYr9LpnIlcArKR_Z0a6laH" target="_blank">
-        📥 Download App (Android)
-      </a>
-
-      <!-- Continue as Website (goes straight to home.html) -->
-      <a class="website-btn" href="https://campusmates12.github.io/CAMPUS-MATES-/home.html">
-        🌐 Continue as Website
-      </a>
-    </div>
-
-    <p class="note">📱 Download is for Android users only</p>
-  </div>
-  <!-- Signup Form -->
-<form id="signup-form" style="max-width: 400px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-  <h3>Create Account</h3>
-  <input type="text" id="fullname" placeholder="Full Name" required />
-  <input type="email" id="email" placeholder="Email" required />
-  <select id="college" required>
-    <option value="">Select College</option>
-    <option value="College of Health Sciences">College of Health Sciences</option>
-    <option value="College of Science, Engineering and Technology">College of Science, Engineering and Technology</option>
-    <option value="Faculty of Computing and Information Technology">Faculty of Computing and Information Technology</option>
-  </select>
-  <input type="password" id="password" placeholder="Password" required />
-  <button type="submit">Sign Up</button>
-</form>
-
-<!-- Login Form -->
-<form id="login-form" style="max-width: 400px; margin: 20px auto 50px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-  <h3>Login</h3>
-  <input type="email" id="login-email" placeholder="Email" required />
-  <input type="password" id="login-password" placeholder="Password" required />
-  <button type="submit">Login</button>
-</form>
-
-<div id="auth-message" style="text-align: center; font-weight: bold; margin-bottom: 50px;"></div>
-
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <!-- Link JS file below or paste the logic inline -->
+  <script src="script.js"></script>
 </body>
 </html>
