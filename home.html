@@ -948,8 +948,6 @@ const quizQuestions = [
   { question: "18. Magnetic field is produced by:", options: ["Static charge", "Moving charge", "Neutrons", "Stationary electrons"], answer: "Moving charge" },
   { question: "19. SI unit of resistance is:", options: ["Volt", "Coulomb", "Ohm", "Ampere"], answer: "Ohm" },
   { question: "20. Transformer works by:", options: ["Static electricity", "Electromagnetic induction", "Thermionic emission", "Capacitance"], answer: "Electromagnetic induction" },
-  
-  // New Questions (21–33)
   { question: "21. What is the function of Gram’s iodine in Gram staining?", options: ["It stains Gram-negative cells", "It acts as a mordant to fix crystal violet to the bacterial cell wall", "It dissolves the bacterial membrane", "It decolorizes the cells"], answer: "It acts as a mordant to fix crystal violet to the bacterial cell wall" },
   { question: "22. What is a spectrophotometer used for in microbiology?", options: ["To count colonies on agar plates", "To sterilize culture media", "To measure turbidity or absorbance of a culture", "To magnify bacterial cells"], answer: "To measure turbidity or absorbance of a culture" },
   { question: "23. What is a viable cell count?", options: ["Measuring total cells using a microscope", "Counting dead cells", "Estimating living microorganisms in a sample", "Measuring protein concentration in cells"], answer: "Estimating living microorganisms in a sample" },
@@ -962,7 +960,32 @@ const quizQuestions = [
   { question: "30. What is casein hydrolysis used to detect?", options: ["Acid-fast bacteria", "Enzymes that break down starch", "Enzymes that break down casein (milk protein)", "Presence of lipid layers"], answer: "Enzymes that break down casein (milk protein)" },
   { question: "31. What is a pure culture?", options: ["Culture with mixed organisms", "Culture with only one species of microorganism", "Sterile media", "Bacteria in natural environment"], answer: "Culture with only one species of microorganism" },
   { question: "32. What is Tyndallization?", options: ["Filtration method of sterilization", "Use of boiling to kill microbes", "Sterilization using intermittent steaming to kill spores", "Use of alcohol for disinfection"], answer: "Sterilization using intermittent steaming to kill spores" },
-  { question: "33. What is the difference between direct and indirect microbial count methods?", options: ["Direct = only viable cells, Indirect = all cells", "Direct = culturing, Indirect = microscope", "Direct = using microscopes/spectrophotometers, Indirect = culturing (e.g., plate counts)", "There is no difference"], answer: "Direct = using microscopes/spectrophotometers, Indirect = culturing (e.g., plate counts)" }
+  { question: "33. What is the difference between direct and indirect microbial count methods?", options: ["Direct = only viable cells, Indirect = all cells", "Direct = culturing, Indirect = microscope", "Direct = using microscopes/spectrophotometers, Indirect = culturing (e.g., plate counts)", "There is no difference"], answer: "Direct = using microscopes/spectrophotometers, Indirect = culturing (e.g., plate counts)" },
+
+  // Business and Entrepreneurship Section (34–56)
+  { question: "34. A legal entity that is separate from its owners is a ________.", options: ["partnership", "sole proprietorship", "corporation", "cooperative"], answer: "corporation" },
+  { question: "35. Which of the following business structures has unlimited liability?", options: ["Corporation", "Sole proprietorship", "Cooperative", "Limited liability company"], answer: "Sole proprietorship" },
+  { question: "36. A business owned and run by one person is known as a ________.", options: ["Corporation", "Partnership", "Sole proprietorship", "Franchise"], answer: "Sole proprietorship" },
+  { question: "37. What is the main purpose of a business plan?", options: ["To eliminate competition", "To apply for a marriage certificate", "To guide business operations and secure funding", "To increase employee salaries"], answer: "To guide business operations and secure funding" },
+  { question: "38. Which of the following is a characteristic of entrepreneurship?", options: ["Avoiding risks at all cost", "Seeking stable employment", "Taking initiative to start new ventures", "Following strict government orders"], answer: "Taking initiative to start new ventures" },
+  { question: "39. In accounting, assets = liabilities + ________.", options: ["expenses", "equity", "capital", "profit"], answer: "equity" },
+  { question: "40. Which one is a current asset?", options: ["Land", "Machinery", "Inventory", "Building"], answer: "Inventory" },
+  { question: "41. What does GDP stand for?", options: ["Gross Domestic Product", "General Development Policy", "Government Development Plan", "Global Domestic Partnership"], answer: "Gross Domestic Product" },
+  { question: "42. The person who brings together resources to start a business is called a ________.", options: ["consumer", "employee", "entrepreneur", "shareholder"], answer: "entrepreneur" },
+  { question: "43. Which of the following is NOT a factor of production?", options: ["Land", "Labour", "Capital", "Wages"], answer: "Wages" },
+  { question: "44. A budget helps a business to ________.", options: ["employ more workers", "track income and expenses", "pay taxes", "eliminate profits"], answer: "track income and expenses" },
+  { question: "45. The amount of money earned after deducting all expenses is called ________.", options: ["capital", "revenue", "profit", "turnover"], answer: "profit" },
+  { question: "46. Which of the following is an example of a liability?", options: ["Inventory", "Loan from bank", "Cash at hand", "Office furniture"], answer: "Loan from bank" },
+  { question: "47. Double-entry accounting means every transaction affects ________.", options: ["one account only", "both income and expense", "two accounts", "the cash account only"], answer: "two accounts" },
+  { question: "48. Which of these best describes marketing?", options: ["Managing human resources", "Keeping business records", "Creating awareness and selling products", "Running financial audits"], answer: "Creating awareness and selling products" },
+  { question: "49. What is an invoice used for?", options: ["To hire staff", "To request payment for goods or services", "To increase business capital", "To apply for a loan"], answer: "To request payment for goods or services" },
+  { question: "50. A market survey is carried out to ________.", options: ["employ marketers", "reduce prices", "understand customer needs and competition", "get bank loans"], answer: "understand customer needs and competition" },
+  { question: "51. Which of the following is an internal source of business finance?", options: ["Bank loan", "Retained profit", "Overdraft", "Venture capital"], answer: "Retained profit" },
+  { question: "52. The process of dividing a market into distinct groups is called ________.", options: ["marketing mix", "market targeting", "market segmentation", "promotion"], answer: "market segmentation" },
+  { question: "53. What is break-even point?", options: ["Where expenses exceed revenue", "Where business makes no profit or loss", "Where capital is exhausted", "Where sales are highest"], answer: "Where business makes no profit or loss" },
+  { question: "54. Who prepares the balance sheet?", options: ["Auditor", "Accountant", "Manager", "Cashier"], answer: "Accountant" },
+  { question: "55. Which of the following is an advantage of partnership?", options: ["Quick decisions", "Easy to raise capital", "Unlimited liability", "Single ownership"], answer: "Easy to raise capital" },
+  { question: "56. A sole proprietor has ________ control of the business.", options: ["limited", "shared", "no", "total"], answer: "total" }
 ];
 
   let currentQuestion = 0;
