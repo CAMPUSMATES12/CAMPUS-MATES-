@@ -59,6 +59,7 @@
       font-weight: bold;
       cursor: pointer;
       margin-bottom: 10px;
+      transition: background 0.3s;
     }
 
     button:hover {
@@ -97,7 +98,7 @@
       <button type="submit">Login</button>
     </form>
 
-    <!-- Sign Up Form (Hidden by default) -->
+    <!-- Sign Up Form -->
     <form id="signup-form" style="display: none;">
       <input type="text" id="fullname" placeholder="Full Name" required />
       <input type="email" id="email" placeholder="Email Address" required />
@@ -114,91 +115,81 @@
     <span class="toggle-link" id="toggle-form">Don't have an account? Sign Up</span>
   </div>
 
-  <!-- Supabase JS -->
+  <!-- Supabase Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-const supabase = supabase.createClient(
-  'https://xmegbhxpfeiiieazddfaj.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM'
-);
+    const supabase = supabase.createClient(
+      "https://xmegbhxpfeiiieazddfaj.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM"
+    );
 
-const loginForm = document.getElementById("login-form");
-const signupForm = document.getElementById("signup-form");
-const toggleLink = document.getElementById("toggle-form");
-const formTitle = document.getElementById("form-title");
-const formDesc = document.getElementById("form-desc");
-const authMessage = document.getElementById("auth-message");
+    // Toggle Login/Signup
+    document.getElementById('toggle-form').addEventListener('click', () => {
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const title = document.getElementById('form-title');
+      const desc = document.getElementById('form-desc');
+      const toggle = document.getElementById('toggle-form');
 
-// Toggle Login/SignUp View
-toggleLink.addEventListener("click", () => {
-  if (signupForm.style.display === "none") {
-    signupForm.style.display = "block";
-    loginForm.style.display = "none";
-    formTitle.innerText = "Create Account";
-    formDesc.innerText = "Please fill in the fields below to register a new account.";
-    toggleLink.innerText = "Already have an account? Login";
-  } else {
-    signupForm.style.display = "none";
-    loginForm.style.display = "block";
-    formTitle.innerText = "Student Login";
-    formDesc.innerText = "To access the exclusive contents of the app, please login with your account details.";
-    toggleLink.innerText = "Don't have an account? Sign Up";
-  }
+      if (signupForm.style.display === 'none') {
+        signupForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        title.textContent = 'Create Account';
+        desc.textContent = 'Sign up to access CampusMate materials and features.';
+        toggle.textContent = 'Already have an account? Login';
+      } else {
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        title.textContent = 'Student Login';
+        desc.textContent = 'To access the exclusive contents of the app, please login with your account details.';
+        toggle.textContent = "Don't have an account? Sign Up";
+      }
+    });
 
-  authMessage.innerText = "";
-});
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
 
-// Handle Login
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        document.getElementById('auth-message').innerText = "❌ " + error.message;
+      } else {
+        location.href = 'home.html';
+      }
+    });
 
-  if (error) {
-    authMessage.innerText = "❌ " + error.message;
-  } else {
-    window.location.href = "home.html";
-  }
-});
+    // Signup
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const full_name = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const college = document.getElementById('college').value.trim();
+      const password = document.getElementById('password').value;
 
-// Handle Sign Up
-signupForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+      const { data, error } = await supabase.auth.signUp({ email, password });
 
-  const full_name = document.getElementById("fullname").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const college = document.getElementById("college").value;
-  const password = document.getElementById("password").value;
+      if (error) {
+        document.getElementById('auth-message').innerText = "❌ " + error.message;
+        return;
+      }
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password
-  });
+      // Save profile
+      const user = data.user;
+      const res = await supabase.from('profiles').insert([{ id: user.id, full_name, college }]);
 
-  if (error) {
-    authMessage.innerText = "❌ " + error.message;
-    return;
-  }
+      if (res.error) {
+        document.getElementById('auth-message').innerText = "✅ Account created, but profile failed to save.";
+      } else {
+        document.getElementById('auth-message').innerText = "🎉 Account created! Redirecting...";
+      }
 
-  // Save user info to 'profiles' table
-  const user = data.user;
-  if (user) {
-    await supabase.from("profiles").insert([
-      {
-        id: user.id,
-        full_name,
-        college,
-      },
-    ]);
-  }
-
-  authMessage.innerText = "✅ Account created successfully!";
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 1500);
-});
-</script>
-
+      setTimeout(() => {
+        location.href = 'home.html';
+      }, 1500);
+    });
+  </script>
 </body>
 </html>
