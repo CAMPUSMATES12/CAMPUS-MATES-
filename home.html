@@ -216,12 +216,13 @@
   </div>
 </div>
 
- <div class="sidebar" id="sidebar">
+<div class="sidebar" id="sidebar">
   <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" />
+  
   <a href="#" onclick="showSection('home'); return false;">🏠 Home</a>
   <a href="#" onclick="showSection('courses'); return false;">📘 Courses</a>
   <a href="#" onclick="showSection('calendar'); return false;">📆 Calendar</a>
-  <a href="#" onclick="showSection('feedback'); return false;">💬 Feedback</a>
+  <a href="#" onclick="showSection('profile'); return false;">🙍‍♂️ Profile</a>
   <a href="#" onclick="showSection('about'); return false;">ℹ️ About</a>
   <a href="#" onclick="showSection('quiz'); return false;">📝 Quiz</a>
 
@@ -231,7 +232,15 @@
     <a href="https://portal.uniosun.edu.ng" target="_blank" rel="noopener noreferrer">🧾 Main Portal</a>
     <a href="https://chrdportal.uniosun.edu.ng/portal/" target="_blank" rel="noopener noreferrer">🧪 JUPEB Portal</a>
   </div>
-</div> 
+
+  <!-- Standalone App Download Button -->
+ <a href="https://drive.google.com/uc?export=download&id=1BhPh_3kT-VXYr9LpnIlcArKR_Z0a6laH"
+   target="_blank"
+   class="sidebar-download-btn">
+  📥 <strong>Download Official App</strong><br>
+  <span style="font-size: 12px; color: #e0e0e0;">Android only</span>
+</a>
+<div>
   
 
 <!-- Floating Widget Button -->
@@ -709,15 +718,6 @@
   </a>
 </div>
 
-    <!-- Feedback Section -->
-    <div id="feedback" class="section">
-      <h2>💬 Student Feedback</h2>
-      <form class="feedback-form" action="https://formsubmit.co/stephenabiola2007@gmail.com" method="POST">
-        <input type="text" name="name" placeholder="Your Full Name" required />
-        <input type="email" name="email" placeholder="Your Email Address" required />
-        <textarea name="message" rows="5" placeholder="Your feedback..." required></textarea>
-        <button type="submit">📤 Submit</button>
-
         <!-- Hidden Settings -->
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_autoresponse" value="Thanks for your feedback, we’ve received your message and will respond shortly.">
@@ -731,6 +731,41 @@
         CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, calendar info, and more in one place.
       </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    "https://xmegbhxpfeiiieazddfaj.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon key
+  );
+
+  async function loadUserProfile() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("full_name, college")
+        .eq("id", user.id)
+        .single();
+
+      if (data) {
+        document.getElementById("user-name").textContent = data.full_name;
+        document.getElementById("user-college").textContent = data.college;
+      } else {
+        document.getElementById("user-name").textContent = "Unknown user";
+        console.error("Profile fetch error:", error);
+      }
+    } else {
+      // If not logged in, redirect to login page
+      window.location.href = "index.html";
+    }
+  }
+
+  // Call this on page load
+  loadUserProfile();
+</script>
+    
     
 <script>
   // Your Firebase config
