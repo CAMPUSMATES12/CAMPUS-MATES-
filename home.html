@@ -732,52 +732,40 @@
       </div>
     </div>
     
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script>
-  const supabase = supabase.createClient(
-    "https://xmegbhxpfeiiieazddfaj.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM"
-  );
+// Initialize Supabase
+const supabase = supabase.createClient(
+  'https://xmegbhxpfeiieazddfaj.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM'
+);
 
-  document.getElementById("signup-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.getElementById('signup-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-    const full_name = document.getElementById("fullname").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const faculty = document.getElementById("faculty").value.trim();
-    const password = document.getElementById("password").value;
+  const fullname = document.getElementById('fullname').value;
+  const email = document.getElementById('email').value;
+  const college = document.getElementById('college').value;
+  const password = document.getElementById('password').value;
+  const messageDiv = document.getElementById('signup-message');
 
-    // 1. Sign up using Supabase Auth
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      document.getElementById("signup-message").innerText = "❌ " + error.message;
-      return;
+  // Create user
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullname,
+        college: college
+      }
     }
-
-    // 2. Save extra details to "profiles" table
-    const { user } = data;
-    const insertRes = await supabase.from("profiles").insert([
-      {
-        id: user.id,
-        full_name,
-        faculty,
-      },
-    ]);
-
-    if (insertRes.error) {
-      document.getElementById("signup-message").innerText = "✅ Signed up, but failed to save profile.";
-    } else {
-      document.getElementById("signup-message").innerText = "🎉 Successfully signed up! Check your email to verify.";
-    }
-
-    // Optional: Reset form
-    e.target.reset();
   });
-</script>
+
+  if (error) {
+    messageDiv.innerHTML = `<p style="color: red;">❌ ${error.message}</p>`;
+  } else {
+    messageDiv.innerHTML = `<p style="color: green;">✅ Sign-up successful! Please check your email to confirm your account.</p>`;
+    document.getElementById('signup-form').reset();
+  }
+});
 
 <script>
   // Your Firebase config
