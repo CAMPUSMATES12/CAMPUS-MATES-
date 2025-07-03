@@ -731,6 +731,53 @@
         CampusMate is an academic support platform designed for UNIOSUN students to access lectures, notes, news, calendar info, and more in one place.
       </div>
     </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    "https://xmegbhxpfeiiieazddfaj.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtZWdiaHhwZmVpaWVhemRkZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NzI4MzYsImV4cCI6MjA2NzE0ODgzNn0.Wji_O-W45bR28fuXQiUMbFfxY96EL5ZThUHQ36pQIeM"
+  );
+
+  document.getElementById("signup-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const full_name = document.getElementById("fullname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const faculty = document.getElementById("faculty").value.trim();
+    const password = document.getElementById("password").value;
+
+    // 1. Sign up using Supabase Auth
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      document.getElementById("signup-message").innerText = "❌ " + error.message;
+      return;
+    }
+
+    // 2. Save extra details to "profiles" table
+    const { user } = data;
+    const insertRes = await supabase.from("profiles").insert([
+      {
+        id: user.id,
+        full_name,
+        faculty,
+      },
+    ]);
+
+    if (insertRes.error) {
+      document.getElementById("signup-message").innerText = "✅ Signed up, but failed to save profile.";
+    } else {
+      document.getElementById("signup-message").innerText = "🎉 Successfully signed up! Check your email to verify.";
+    }
+
+    // Optional: Reset form
+    e.target.reset();
+  });
+</script>
 
 <script>
   // Your Firebase config
