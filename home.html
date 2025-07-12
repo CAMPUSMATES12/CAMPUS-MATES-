@@ -173,29 +173,44 @@
 }
 
 
-  .slide-widget {
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-  }
+.popup-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .slide-widget.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .slide-widget.hide {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-.slider {
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
   position: relative;
+  max-width: 90%;
+  width: 600px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
   text-align: center;
 }
-.slider-controls {
-  margin-top: 10px;
+
+.wide-popup {
+  width: 95%;
+  max-width: 800px;
 }
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
 .slider-controls button {
   padding: 8px 12px;
   font-size: 18px;
@@ -206,6 +221,7 @@
   border: none;
   border-radius: 4px;
 }
+
 .save-btn {
   margin-top: 15px;
   padding: 10px 16px;
@@ -216,6 +232,7 @@
   font-weight: bold;
   border: none;
 }
+
 .save-btn:hover {
   background-color: #256ed1;
 }
@@ -284,16 +301,17 @@
 </div>
 
 <!-- 📌 Formula Popup with Slider -->
-<div id="formulaPopup" class="popup-message">
-  <div class="popup-content">
+<div id="formulaPopup" class="popup-message" style="display: none;">
+  <div class="popup-content wide-popup">
     <span class="close-btn" onclick="closeFormulaPopup()">&times;</span>
 
     <!-- Logo -->
     <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
 
-    <h3>📘 Important Formula Sheets & Test Timetable</h3>
+    <!-- 👇 Update title here -->
+    <h3 style="margin-bottom: 10px;">📝 UNIOSUN 100 LEVEL TEST TIMETABLE & FORMULA SLIDES</h3>
 
-    <!-- Slider container -->
+    <!-- Slider -->
     <div class="slider">
       <img id="slideImage" src="" alt="Formula Slide" style="width: 100%; border-radius: 8px;" />
       <div class="slider-controls">
@@ -302,11 +320,11 @@
       </div>
     </div>
 
+    <!-- Save All -->
     <br />
     <button onclick="downloadAllImages()" class="save-btn">💾 Save All</button>
   </div>
 </div>
-
 
 <!-- Floating Widget Button -->
 <button onclick="toggleWidget()" style="
