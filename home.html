@@ -189,72 +189,45 @@
     transform: translateY(20px);
   }
 
-.modal {
+.popup-message {
   display: none;
   position: fixed;
-  z-index: 999;
-  padding-top: 50px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  background-color: rgba(0,0,0,0.7);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.modal-content {
-  background-color: #fff;
-  margin: auto;
-  padding: 25px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+.popup-content {
+  background: #fff;
+  padding: 20px;
   width: 90%;
-  max-width: 600px;
-  position: relative;
+  max-width: 400px;
+  border-radius: 10px;
   text-align: center;
-}
-
-.modal-content img {
-  width: 100%;
-  margin: 10px 0;
-  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 .close-btn {
-  color: #aaa;
-  font-size: 28px;
+  float: right;
+  font-size: 22px;
   font-weight: bold;
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  cursor: pointer;
-}
-
-.modal-close-btn {
-  margin-top: 20px;
-  background-color: #2d87f0;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  color: red;
   cursor: pointer;
 }
 
 .save-btn {
   display: inline-block;
-  margin-top: 8px;
-  background-color: #10b981;
+  margin-top: 10px;
+  background: #2d87f0;
   color: white;
-  padding: 8px 16px;
-  text-decoration: none;
+  padding: 8px 12px;
   border-radius: 6px;
-  font-size: 14px;
+  text-decoration: none;
   font-weight: bold;
-}
-
-.save-btn:hover {
-  background-color: #059669;
 }
 
 
@@ -320,42 +293,24 @@
   </a>
 </div>
 
-<!-- 📘 Important Formulas Modal -->
-<div id="notice-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" style="max-width: 80px; margin-bottom: 10px;" />
-    <h2>📘 CampusMate Formula Sheet</h2>
-    <p>Useful formulas for your MTH & PHY 102 courses</p>
+<!-- 📌 Formula Popup -->
+<div id="formulaPopup" class="popup-message">
+  <div class="popup-content">
+    <span class="close-btn" onclick="closeFormulaPopup()">&times;</span>
+    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
+    <h3>📘 Important Formula Sheets</h3>
 
-    <h3>🧮 MTH 102 Formulas</h3>
-    <div class="formula">
-      <img src="https://i.postimg.cc/523CLHLv/temp-image-9-AE3-A9-A4-771-C-4-E94-91-D9-A1-AB03-DB0-A27.webp" alt="MTH 102 Formula 1" />
-      <a class="save-btn" href="https://i.postimg.cc/523CLHLv/temp-image-9-AE3-A9-A4-771-C-4-E94-91-D9-A1-AB03-DB0-A27.webp" download>📥 Save Image</a>
-    </div>
+    <!-- MTH 102 -->
+    <p><strong>MTH 102 Formulas</strong></p>
+    <img src="https://i.postimg.cc/523CLHLv/temp-image-9-AE3-A9-A4-771-C-4-E94-91-D9-A1-AB03-DB0-A27.webp" style="width: 100%; border-radius: 8px;" />
+    <a href="https://i.postimg.cc/523CLHLv/temp-image-9-AE3-A9-A4-771-C-4-E94-91-D9-A1-AB03-DB0-A27.webp" download class="save-btn">💾 Save MTH 102 Formula</a>
 
-    <div class="formula">
-      <img src="https://i.postimg.cc/6QpG09fP/temp-image-848-E65-A3-F59-D-4-F11-AC2-D-B8-F74-BE2828-C.webp" alt="MTH 102 Formula 2" />
-      <a class="save-btn" href="https://i.postimg.cc/6QpG09fP/temp-image-848-E65-A3-F59-D-4-F11-AC2-D-B8-F74-BE2828-C.webp" download>📥 Save Image</a>
-    </div>
+    <!-- PHY 102 -->
+    <p><strong>PHY 102 Formulas</strong></p>
+    <img src="https://i.postimg.cc/PfwvKV1d/temp-image-5-A2-D4-B4-C-9-F75-4-C33-B7-F4-CC33-C4-F2845-F.webp" style="width: 100%; border-radius: 8px;" />
+    <a href="https://i.postimg.cc/PfwvKV1d/temp-image-5-A2-D4-B4-C-9-F75-4-C33-B7-F4-CC33-C4-F2845-F.webp" download class="save-btn">💾 Save PHY 102 Formula</a>
 
-    <h3>⚙️ PHY 102 Formulas</h3>
-    <div class="formula">
-      <img src="https://i.postimg.cc/PfwvKV1d/temp-image-5-A2-D4-B4-C-9-F75-4-C33-B7-F4-CC33-C4-F2845-F.webp" alt="PHY 102 Formula 1" />
-      <a class="save-btn" href="https://i.postimg.cc/PfwvKV1d/temp-image-5-A2-D4-B4-C-9-F75-4-C33-B7-F4-CC33-C4-F2845-F.webp" download>📥 Save Image</a>
-    </div>
-
-    <div class="formula">
-      <img src="https://i.postimg.cc/bJKDp1fX/temp-image-5-BDA666-F-8425-40-F7-9-BA0-0-D74764-BE387.webp" alt="PHY 102 Formula 2" />
-      <a class="save-btn" href="https://i.postimg.cc/bJKDp1fX/temp-image-5-BDA666-F-8425-40-F7-9-BA0-0-D74764-BE387.webp" download>📥 Save Image</a>
-    </div>
-
-    <div class="formula">
-      <img src="https://i.postimg.cc/d3r71DJh/temp-image-BB8-D81-B6-FDFB-4-F7-D-BB25-398-BBA175954.webp" alt="PHY 102 Formula 3" />
-      <a class="save-btn" href="https://i.postimg.cc/d3r71DJh/temp-image-BB8-D81-B6-FDFB-4-F7-D-BB25-398-BBA175954.webp" download>📥 Save Image</a>
-    </div>
-
-    <button onclick="closeModal()" class="modal-close-btn">Close</button>
+    <!-- Add more images/formulas below if you want -->
   </div>
 </div>
 
@@ -993,15 +948,20 @@ loadMaterials("jupeb", "jupeb-list");
   });
 </script>
 
-<!-- ✅ FORMULA MODAL FUNCTIONS -->
 <script>
-  function openModal() {
-    document.getElementById("formulaModal").style.display = "block";
+  function showFormulaPopup() {
+    document.getElementById("formulaPopup").style.display = "flex";
   }
 
-  function closeModal() {
-    document.getElementById("formulaModal").style.display = "none";
+  function closeFormulaPopup() {
+    document.getElementById("formulaPopup").style.display = "none";
   }
+
+  // 👉 Show the popup only when logged in or signed up
+  document.addEventListener("DOMContentLoaded", function () {
+    // Optional: Add a slight delay for better UX
+    setTimeout(showFormulaPopup, 1000);
+  });
 </script>
 
 <script>
