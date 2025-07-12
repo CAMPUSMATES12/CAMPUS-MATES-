@@ -970,9 +970,9 @@ loadMaterials("jupeb", "jupeb-list");
   ];
 
   let currentIndex = 0;
-  const slideImg = document.getElementById("slideImage");
 
   function showSlide(index) {
+    const slideImg = document.getElementById("slideImage");
     if (slideImg) slideImg.src = images[index];
   }
 
@@ -986,20 +986,29 @@ loadMaterials("jupeb", "jupeb-list");
     showSlide(currentIndex);
   }
 
+  function closeFormulaPopup() {
+    document.getElementById("formulaPopup").style.display = "none";
+  }
+
+  function showFormulaPopup() {
+    document.getElementById("formulaPopup").style.display = "flex";
+    showSlide(0);
+  }
+
   function downloadAllImages() {
-    images.forEach((url, i) => {
+    images.forEach((url, index) => {
       const a = document.createElement("a");
       a.href = url;
-      a.download = `formula_${i + 1}.jpg`;
+      a.download = `slide_${index + 1}.jpg`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     });
   }
 
-  // Auto-show first image
+  // Show automatically on login/signup or on page load
   document.addEventListener("DOMContentLoaded", () => {
-    showSlide(0);
+    showFormulaPopup();
   });
 </script>
 
