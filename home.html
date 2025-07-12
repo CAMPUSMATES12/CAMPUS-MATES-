@@ -177,64 +177,67 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
-  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
-
 .popup-content {
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  position: relative;
-  max-width: 90%;
-  width: 600px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  text-align: center;
-}
-
-.wide-popup {
   width: 95%;
-  max-width: 800px;
+  max-width: 850px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
 }
-
 .close-btn {
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 24px;
+  cursor: pointer;
+  color: #000;
+}
+.popup-content h2 {
+  margin-bottom: 10px;
+  color: #222;
+}
+.popup-content h3 {
+  margin: 20px 0 10px;
   color: #333;
-  cursor: pointer;
 }
-
+.popup-content img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.slider-controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
 .slider-controls button {
-  padding: 8px 12px;
-  font-size: 18px;
-  margin: 0 5px;
+  padding: 5px 12px;
+  font-size: 16px;
   cursor: pointer;
-  background-color: #2d87f0;
-  color: white;
+  background: #eee;
   border: none;
-  border-radius: 4px;
-}
-
-.save-btn {
-  margin-top: 15px;
-  padding: 10px 16px;
-  background-color: #2d87f0;
-  color: white;
-  text-decoration: none;
   border-radius: 5px;
-  font-weight: bold;
-  border: none;
 }
-
-.save-btn:hover {
-  background-color: #256ed1;
+.save-btn {
+  background: #2a9d8f;
+  color: white;
+  padding: 8px 15px;
+  margin-top: 5px;
+  text-decoration: none;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 
@@ -300,31 +303,43 @@
   </a>
 </div>
 
-<!-- 📌 Formula Popup with Slider -->
-<div id="formulaPopup" class="popup-message" style="display: none;">
-  <div class="popup-content wide-popup">
-    <span class="close-btn" onclick="closeFormulaPopup()">&times;</span>
 
-    <!-- Logo -->
-    <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
+  <div id="studyPopup" class="popup-message">
+    <div class="popup-content">
+      <span class="close-btn" onclick="document.getElementById('studyPopup').style.display='none'">&times;</span>
+      <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" style="width: 80px; margin-bottom: 10px;" />
+      <h2>📚 Study Essentials & Test Timetable</h2>
 
-    <!-- 👇 Update title here -->
-    <h3 style="margin-bottom: 10px;">📝 UNIOSUN 100 LEVEL TEST TIMETABLE & FORMULA SLIDES</h3>
-
-    <!-- Slider -->
-    <div class="slider">
-      <img id="slideImage" src="" alt="Formula Slide" style="width: 100%; border-radius: 8px;" />
+      <!-- 📆 Timetable -->
+      <h3>📆 Test Timetable</h3>
+      <img id="timetableSlide" src="">
       <div class="slider-controls">
-        <button onclick="prevSlide()">⏮️</button>
-        <button onclick="nextSlide()">⏭️</button>
+        <button onclick="prevSlide('timetable')">⬅️ Prev</button>
+        <button onclick="nextSlide('timetable')">Next ➡️</button>
       </div>
-    </div>
+      <a id="saveTimetable" class="save-btn" download>💾 Save This Image</a>
 
-    <!-- Save All -->
-    <br />
-    <button onclick="downloadAllImages()" class="save-btn">💾 Save All</button>
+      <!-- 📘 PHY 102 -->
+      <h3>📘 PHY 102 Formulas</h3>
+      <img id="phySlide" src="">
+      <div class="slider-controls">
+        <button onclick="prevSlide('phy')">⬅️ Prev</button>
+        <button onclick="nextSlide('phy')">Next ➡️</button>
+      </div>
+      <a id="savePhy" class="save-btn" download>💾 Save This Image</a>
+
+      <!-- 📗 MTH 102 -->
+      <h3>📗 MTH 102 Formulas</h3>
+      <img id="mthSlide" src="">
+      <div class="slider-controls">
+        <button onclick="prevSlide('mth')">⬅️ Prev</button>
+        <button onclick="nextSlide('mth')">Next ➡️</button>
+      </div>
+      <a id="saveMth" class="save-btn" download>💾 Save This Image</a>
+    </div>
   </div>
-</div>
+
+
 
 <!-- Floating Widget Button -->
 <button onclick="toggleWidget()" style="
@@ -960,59 +975,100 @@ loadMaterials("jupeb", "jupeb-list");
 </script>
 
 <script>
-  const images = [
+  const popup = document.getElementById("studyPopup");
+const closeBtn = document.querySelector(".close-btn");
+
+// Open the popup (used automatically after login)
+function showPopup() {
+  if (!sessionStorage.getItem("popupShown")) {
+    popup.style.display = "flex";
+    sessionStorage.setItem("popupShown", "true");
+  }
+}
+
+// Close button logic
+function closeStudyPopup() {
+  popup.style.display = "none";
+}
+
+// Global close button handler
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeStudyPopup);
+}
+
+// Slides for each group
+const slideGroups = {
+  timetable: [
+     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7389.jpeg",
     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7390.jpeg",
-    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7390.jpeg"
-    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7391.jpeg"
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7391.jpeg",
     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7392.jpeg"
-     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5A2D4B4C-9F75-4C33-B7F4-CC33C4F2845F.webp",
+  ],
+  phy: [
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5A2D4B4C-9F75-4C33-B7F4-CC33C4F2845F.webp",
     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5BDA666F-8425-40F7-9BA0-0D74764BE387.webp",
-    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_BB8D81B6-FDFB-4F7D-BB25-398BBA175954.webp",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_BB8D81B6-FDFB-4F7D-BB25-398BBA175954.webp"
+  ],
+  mth: [
     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_9AE3A9A4-771C-4E94-91D9-A1AB03DB0A27.webp",
     "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_848E65A3-F59D-4F11-AC2D-B8F74BE2828C.webp"
+  ]
+};
+
+let currentSlide = {
+  timetable: 0,
+  phy: 0,
+  mth: 0
+};
+
+// Update slide image
+function updateSlide(group) {
+  const img = document.getElementById(`${group}Slide`);
+  if (!img || !slideGroups[group]) return;
+
+  img.src = slideGroups[group][currentSlide[group]];
+}
+
+// Navigate slides
+function nextSlide(group) {
+  if (slideGroups[group]) {
+    currentSlide[group] = (currentSlide[group] + 1) % slideGroups[group].length;
+    updateSlide(group);
+  }
+}
+
+function prevSlide(group) {
+  if (slideGroups[group]) {
+    currentSlide[group] = (currentSlide[group] - 1 + slideGroups[group].length) % slideGroups[group].length;
+    updateSlide(group);
+  }
+}
+
+// Save all images
+function saveAllImages() {
+  const allLinks = [
+    ...slideGroups.timetable,
+    ...slideGroups.phy,
+    ...slideGroups.mth
   ];
 
-  let currentIndex = 0;
-
-  function showSlide(index) {
-    const slideImg = document.getElementById("slideImage");
-    if (slideImg) slideImg.src = images[index];
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showSlide(currentIndex);
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showSlide(currentIndex);
-  }
-
-  function closeFormulaPopup() {
-    document.getElementById("formulaPopup").style.display = "none";
-  }
-
-  function showFormulaPopup() {
-    document.getElementById("formulaPopup").style.display = "flex";
-    showSlide(0);
-  }
-
-  function downloadAllImages() {
-    images.forEach((url, index) => {
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `slide_${index + 1}.jpg`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    });
-  }
-
-  // Show automatically on login/signup or on page load
-  document.addEventListener("DOMContentLoaded", () => {
-    showFormulaPopup();
+  allLinks.forEach(link => {
+    const a = document.createElement("a");
+    a.href = link;
+    a.download = "";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   });
+}
+
+// Automatically show popup after login/signup
+window.onload = function () {
+  updateSlide("timetable");
+  updateSlide("phy");
+  updateSlide("mth");
+  showPopup(); // auto show popup only once
+};
 </script>
 
 <script>
