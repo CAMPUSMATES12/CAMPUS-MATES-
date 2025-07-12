@@ -189,45 +189,35 @@
     transform: translateY(20px);
   }
 
-.popup-message {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.popup-content {
-  background: #fff;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
+.slider {
+  position: relative;
   text-align: center;
-  overflow-y: auto;
-  max-height: 90vh;
 }
-
-.close-btn {
-  float: right;
-  font-size: 22px;
-  font-weight: bold;
-  color: red;
-  cursor: pointer;
-}
-
-.save-btn {
-  display: inline-block;
+.slider-controls {
   margin-top: 10px;
-  background: #2d87f0;
-  color: white;
+}
+.slider-controls button {
   padding: 8px 12px;
-  border-radius: 6px;
+  font-size: 18px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #2d87f0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+.save-btn {
+  margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #2d87f0;
+  color: white;
   text-decoration: none;
+  border-radius: 5px;
   font-weight: bold;
+  border: none;
+}
+.save-btn:hover {
+  background-color: #256ed1;
 }
 
 
@@ -293,38 +283,27 @@
   </a>
 </div>
 
-<!-- 📌 Formula Popup -->
+<!-- 📌 Formula Popup with Slider -->
 <div id="formulaPopup" class="popup-message">
   <div class="popup-content">
     <span class="close-btn" onclick="closeFormulaPopup()">&times;</span>
-    
+
     <!-- Logo -->
     <img src="https://i.postimg.cc/hPVKD9sB/044-ACE9-A-41-E1-43-A6-9-D18-C6202-A5-B72-F4.png" alt="Logo" style="width: 80px; margin-bottom: 10px;" />
-    
-    <h3>📅 UPCOMING TEST TIMETABLE</h3>
 
-    <!-- 🧪 Test Timetable Image -->
-    <img src="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7390.jpeg" style="width: 100%; border-radius: 8px;" />
-    <a href="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7390.jpeg" download class="save-btn">💾 Save Test Timetable</a>
-    <a href=https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7391.jpeg"download class="save-btn">💾 Save Test Timetable</a>
-    <a href=https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7392.jpeg"download class="save-btn">💾 Save Test Timetable</a>
-   
-    
-    
-     <h3>📘 IMPORTANT FORMULARS SHEET</h3>
+    <h3>📘 Important Formula Sheets & Test Timetable</h3>
 
-    <!-- PHY 102 -->
-    <p><strong>PHY 102 Formulas</strong></p>
-    <img src="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5A2D4B4C-9F75-4C33-B7F4-CC33C4F2845F.webp" style="width: 100%; border-radius: 8px;" />
-    <a href="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5BDA666F-8425-40F7-9BA0-0D74764BE387.webp" download class="save-btn">💾 Save PHY 102 Formula</a>
-    <a href="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_BB8D81B6-FDFB-4F7D-BB25-398BBA175954.webp" download class="save-btn">💾 Save PHY 102 Formula</a>
+    <!-- Slider container -->
+    <div class="slider">
+      <img id="slideImage" src="" alt="Formula Slide" style="width: 100%; border-radius: 8px;" />
+      <div class="slider-controls">
+        <button onclick="prevSlide()">⏮️</button>
+        <button onclick="nextSlide()">⏭️</button>
+      </div>
+    </div>
 
-    <!-- MTH 102 -->
-    <p><strong>MTH 102 Formulas</strong></p>
-    <img src="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_9AE3A9A4-771C-4E94-91D9-A1AB03DB0A27.webp" style="width: 100%; border-radius: 8px;" />
-    <a href="https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_848E65A3-F59D-4F11-AC2D-B8F74BE2828C.webp" download class="save-btn">💾 Save MTH 102 Formula</a>
-
-    <!-- Add more formulas if needed -->
+    <br />
+    <button onclick="downloadAllImages()" class="save-btn">💾 Save All</button>
   </div>
 </div>
 
@@ -963,18 +942,46 @@ loadMaterials("jupeb", "jupeb-list");
 </script>
 
 <script>
-  function showFormulaPopup() {
-    document.getElementById("formulaPopup").style.display = "flex";
+  const images = [
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/timetable//IMG_7390.jpeg",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5A2D4B4C-9F75-4C33-B7F4-CC33C4F2845F.webp",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_5BDA666F-8425-40F7-9BA0-0D74764BE387.webp",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_BB8D81B6-FDFB-4F7D-BB25-398BBA175954.webp",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_9AE3A9A4-771C-4E94-91D9-A1AB03DB0A27.webp",
+    "https://xmegbhxpfeiieazddfaj.supabase.co/storage/v1/object/public/courses//temp_image_848E65A3-F59D-4F11-AC2D-B8F74BE2828C.webp"
+  ];
+
+  let currentIndex = 0;
+  const slideImg = document.getElementById("slideImage");
+
+  function showSlide(index) {
+    if (slideImg) slideImg.src = images[index];
   }
 
-  function closeFormulaPopup() {
-    document.getElementById("formulaPopup").style.display = "none";
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % images.length;
+    showSlide(currentIndex);
   }
 
-  // 👉 Show the popup only when logged in or signed up
-  document.addEventListener("DOMContentLoaded", function () {
-    // Optional: Add a slight delay for better UX
-    setTimeout(showFormulaPopup, 1000);
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showSlide(currentIndex);
+  }
+
+  function downloadAllImages() {
+    images.forEach((url, i) => {
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `formula_${i + 1}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+
+  // Auto-show first image
+  document.addEventListener("DOMContentLoaded", () => {
+    showSlide(0);
   });
 </script>
 
